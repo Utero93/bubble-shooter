@@ -95,5 +95,27 @@ canvas {
   border: 2px solid #ff6b00;
   border-radius: 9999px; /* Use a very high value to create a rounded effect */
   font-size: 0.995rem;
+}
 
+
+/* styling for GAME PAUSED*/
+#pause-game {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  font-size: 2.25rem;
+  font-weight: bold;
+  line-height: 2;
+  color: #ff6b00;
+  text-shadow: 0 0 10px #ff6b00, 0 0 20px #ff6b00, 0 0 30px #ff6b00; /* Neon orange glow effect */
+  text-align: center;
+  font-size: 2em;
+}
+
+.hidden {
+  display: none;
 }
