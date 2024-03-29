@@ -4,7 +4,7 @@ body {
     height: 100vh;
     max-width: 100%;
     max-height: 100%; 
-    margin-top: 8%;
+    margin-top: 0;
     background-image: url(./assets/Spac-bg.png);
     overflow: hidden;
 }
@@ -25,7 +25,7 @@ body {
     font-style: oblique;
     color: #ff6b00;
     text-decoration: 2px underline white;
-    text-shadow: 0 0 15px #fff, 0 0 20px #ff6b00, 0 0 30px #ff6b00; /* Neon orange glow effect */
+    text-shadow: 0 0 5px #fff, 0 0 20px #ff6b00, 0 0 30px #ff6b00; /* Neon orange glow effect */
 }
 
 @keyframes revealText {
@@ -76,8 +76,8 @@ body {
 
 .earth {
     position: absolute;
-    top: 52%; /* You can adjust the positioning as needed */
-    left: 50%; /* You can adjust the positioning as needed */
+    top: 39%; /* You can adjust the positioning as needed */
+    left: 49.7%; /* You can adjust the positioning as needed */
     transform: translate(-50%, -50%);
     z-index: 0; /* Set a higher z-index for the Earth image to bring it in front */
 }

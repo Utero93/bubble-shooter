@@ -1,6 +1,6 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
-const b = document.getElementById('img')
+const body = document.querySelector('body');
 
 canvas.width = innerWidth
 canvas.height = innerHeight
@@ -28,7 +28,11 @@ class Player {
     }
 }
 
-
+function drawPlayer(x, y) {
+    const playerElement = document.getElementById('player');
+    playerElement.style.left = x + '0px'; // Set the x position
+    playerElement.style.top = y + '0px'; // Set the y position
+}
 
 class Projectile {
     constructor(x, y, radius, color, velocity, shape) {
@@ -350,7 +354,7 @@ function spawnEnemies() {
         };
         
         enemies.push(new Enemy(x, y, radius, color, velocity, selectedShape));
-    }, 1000);
+    }, 2600);
 }
 
 // Call spawnEnemies function to start spawning enemies with random shapes
@@ -406,7 +410,7 @@ function animate() {
         // when projectiles touch enemy
     if (dist - enemy.radius - projectile.radius < 1)  {
         
-        const explosionSound = new Audio('./assets/burst.mp3');
+        const explosionSound = new Audio('./assets/burst.wav');
         explosionSound.play();
         for (let i = 0; i < enemy.radius * 2; i++) {
             particles.push (new Particle(projectile.x, 
@@ -445,10 +449,11 @@ function animate() {
 }
 
 
+
 let mouseDown = false;
 
 // Add sound effect for projectiles
-const projectileSound = new Audio('./assets/lighthumburst.mp3');
+const projectileSound = new Audio('./assets/lighthumburst.wav');
 
 // Event listener for mouse down to play projectile sound
 window.addEventListener('mousedown', () => {
@@ -463,8 +468,8 @@ canvas.addEventListener('mousemove', (event) => {
         );
 
         const velocity = {
-            x: Math.cos(angle) * 5,
-            y: Math.sin(angle) * 5
+            x: Math.cos(angle) * 4,
+            y: Math.sin(angle) * 4
         };
 
         const randomSize = Math.floor(Math.random() * 2) + 5;
@@ -483,35 +488,44 @@ canvas.addEventListener('mousemove', (event) => {
 
 
 // Listen for mouse down
+let mouseHoldTimer;
+
 canvas.addEventListener('mousedown', (event) => {
     mouseDown = true;
-
     canvas.removeEventListener('mouseup', mouseUpHandler);
+
     function mouseUpHandler() {
+        clearTimeout(mouseHoldTimer); // Clear the timer if mouse is released before firing
         mouseDown = false;
         canvas.removeEventListener('mousemove', mouseMoveHandler);
         canvas.removeEventListener('mouseup', mouseUpHandler);
     }
-    
+
     canvas.addEventListener('mousemove', mouseMoveHandler);
+
     function mouseMoveHandler(event) {
+        clearTimeout(mouseHoldTimer); // Clear any existing timer
+        mouseHoldTimer = setTimeout(() => {
+            // Code to interrupt the projectile when the mouse is held down for too long
+            console.log("Mouse held down for too long, interrupting projectile");
+        }, 8); // Set a delay of 1 second (1000 milliseconds) before interrupting the projectile
+
         const angle = Math.atan2(
             event.clientY - canvas.height / 2,
             event.clientX - canvas.width / 2
         );
 
         const velocity = {
-            x: Math.cos(angle) * 5,
-            y: Math.sin(angle) * 5
+            x: Math.cos(angle) * 4,
+            y: Math.sin(angle) * 4
         };
 
-        // const randomSize = Math.floor(Math.random() * 5) + 10;
+        const randomSize = Math.floor(Math.random() * 2) + 5;
 
         projectiles.push(new Projectile(
             canvas.width / 2,
             canvas.height / 2,
             randomSize,
-            // 'orange',
             velocity,
             'zero',
             'one'
@@ -527,3 +541,54 @@ animate()
 spawnEnemies()
 modalEl.style.display = 'none'
 })
+
+// In this script:
+// 1. We select the button element with the id 'returnButton'.
+// 2. We add an event listener for the click event on the button.
+// 3. When the button is clicked, it will redirect the user to `title.html`.
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the Return button element
+    var returnButton = document.getElementById('returnButton');
+
+    // Add an event listener for the click event
+    returnButton.addEventListener('click', function() {
+        window.location.href = 'title.html'; // Redirect to title.html when the button is clicked
+    });
+});
+
+
+
+// Define a variable to track whether the game is paused
+let isGamePaused = false;
+const pauseGameDiv = document.getElementById('pause-game'); // Get the pause-game div from the HTML
+
+// Function to handle resuming the game
+async function resumeGame() {
+    // Implement logic to resume the game
+    console.log('Game resumed');
+    isGamePaused = false;
+    pauseGameDiv.style.display = 'none'; // Hide the pause-game div
+}
+
+// Function to handle pausing the game
+async function pauseGame() {
+    // Implement logic to pause the game
+    console.log('Game paused');
+    isGamePaused = true;
+    pauseGameDiv.style.display = 'block'; // Show the pause-game div
+}
+
+// Event listener for key press (specifically the 'p' key)
+window.addEventListener('keyup', async (event) => {
+    if (event.key === 'p') {
+        const pauseGameDiv = document.getElementById('pause-game'); // Get the pause-game div from the HTML
+        if (isGamePaused) {
+            await resumeGame();
+            pauseGameDiv.style.display = 'none'; // Hide the pause-game div
+        } else {
+            await pauseGame();
+            pauseGameDiv.style.display = 'block'; // Show the pause-game div
+        }
+    }
+});

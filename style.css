@@ -85,10 +85,15 @@ canvas {
     font-size: 0.995rem;
   }
 
-.bigScoreEl {
 
-}
-
-.startGameBtn {
+.Return {
+  background-color: black;
+  color: #fff;
+  text-shadow: 0 0 10px #ff6b00, 0 0 20px #ff6b00, 0 0 30px #ff6b00; /* Neon orange glow effect */
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ff6b00;
+  border-radius: 9999px; /* Use a very high value to create a rounded effect */
+  font-size: 0.995rem;
 
 }
