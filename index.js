@@ -5,6 +5,7 @@ const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 const body = document.querySelector("body");
 
+
 // -------======= THIS CODE SETS THE WIDTH AND HEIGHT OF THE CANVAS ELEMENT TO MATCH THE WIDTH AND HEIGHT OF THE BROWSER WINDOW. -------======= \\
 
 canvas.width = innerWidth;
@@ -16,7 +17,7 @@ const startGameBtn = document.querySelector("#startGameBtn");
 const modalEl = document.querySelector("#modalEl");
 const bigScoreEl = document.querySelector("#bigScoreEl");
 
-// -------======= THIS CODE DEFINES A CLASS CALLED PLAYER THAT DESCRIBES A PLAYER OBJECT WITH POSITION (X AND Y COORDINATES), SIZE (RADIUS), AND COLOR. -------======= \\
+// -------======= THIS CODE DEFINES THE CLASS PLAYER THAT DESCRIBES A PLAYER OBJECT WITH POSITION (X AND Y COORDINATES), SIZE (RADIUS), COLOR. -------======= \\
 class Player {
   constructor(x, y, radius, color) {
     this.x = x;
@@ -83,8 +84,9 @@ class Projectile {
 // -------======= THIS CODE CHECKS IF THE DISTANCE BETWEEN THE CURRENT ELEMENT AND AN ENEMY IN AN ARRAY OF ENEMIES IS LESS THAN THE SUM OF THEIR RADII. -------======= \\
       if (distance - this.radius - enemy.radius < 1) {
        
-        this.shape = "zero"; // IF THE CONDITION IS MET, IT INDICATES A COLLISION HAS OCCURRED AND CHANGES THE SHAPE 
         this.color = "red";  // AND COLOR OF THE ELEMENT.
+        this.shape = "one"; // IF THE CONDITION IS MET, IT INDICATES A COLLISION HAS OCCURRED AND CHANGES THE SHAPE 
+        
       }         
         
     });
@@ -123,17 +125,17 @@ class Enemy {
   draw() {
     c.beginPath();
 
-// -------=======  THIS CODE DRAWS A CIRCLE-SHAPED ENEMY ON A CANVAS. -------======= \\
+// -------======= THIS CODE DRAWS A CIRCLE-SHAPED ENEMY ON A CANVAS. -------======= \\
     if (this.shape === "circle") {
       c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
 
-// -------=======  THIS CODE DRAWS A SQUARE-SHAPED ENEMY ON A CANVAS. -------======= \\
+// -------======= THIS CODE DRAWS A SQUARE-SHAPED ENEMY ON A CANVAS. -------======= \\
     } else if (this.shape === "square") {
       c.rect(
         this.x - this.radius,
         this.y - this.radius,
-        this.radius * 2,
-        this.radius * 2
+        this.radius * 4,
+        this.radius * 4
       );
 
 // -------=======  THIS CODE DRAWS A TRIANGLE-SHAPED ENEMY ON A CANVAS. -------======= \\
@@ -168,14 +170,6 @@ class Enemy {
         this.radius,
         this.radius / 2
       );
-
-// -------=======  THIS CODE DRAWS A TRAPEZOID-SHAPED ENEMY ON A CANVAS. -------======= \\
-    } else if (this.shape === "trapezoid") {
-      // Draw a trapezoid
-      c.moveTo(this.x - this.width / 2, this.y + this.height / 2);
-      c.lineTo(this.x + this.width / 2, this.y + this.height / 2);
-      c.lineTo(this.x + 2 * this.width, this.y - this.height / 2);
-      c.lineTo(this.x - 4 * this.width, this.y - this.height / 2);
 
 // -------======= THIS CODE DRAWS A RED CIRCULAR "BOSS" ENEMY ON A CANVAS. -------======= \\
     } else if (this.shape === "boss1") {
@@ -388,11 +382,11 @@ function spawnEnemies() {
     setInterval(() => {
       const radius = Math.random() * (60 - 4) + 4;
 
-// -------=======  DECLARES TWO VARIABLES, X AND Y, WITHOUT ASSIGNING A VALUE TO THEM. -------======= \\
+// -------======= DECLARES TWO VARIABLES, X AND Y, WITHOUT ASSIGNING A VALUE TO THEM. -------======= \\
       let x;
       let y;
 
-// -------=======  GENERATES RANDOM COORDINATES WITHIN A CANVAS AREA, EITHER ALONG THE EDGES OR OUTSIDE THE CANVAS, BASED ON A RANDOM NUMBER. -------======= \\
+// -------======= GENERATES RANDOM COORDINATES WITHIN A CANVAS AREA, EITHER ALONG THE EDGES OR OUTSIDE THE CANVAS, BASED ON A RANDOM NUMBER. -------======= \\
       if (Math.random() < 0.5) {
         x = Math.random() < 0.5 ? 0 - radius : canvas.width + radius;
         y = Math.random() * canvas.height;
@@ -432,7 +426,7 @@ function spawnEnemies() {
 
 // -------======= CHECKS IF THE GAME IS PAUSED, AND IF IT IS, DISPLAYS A MESSAGE ("Game is paused") IN THE CONSOLE AND EXITS THE FUNCTION. -------======= \\
   } else if (paused) {
-    console.log("Game is paused");
+    console.log("Game Is Paused");
     return;
   }
 }
@@ -551,7 +545,7 @@ function animate() {
 
 // -------======= THIS CODE CHECKS IF THE GAME IS PAUSED. IF THE CONDITION IS TRUE, IT LOGS "GAME IS PAUSED" AND EXITS THE FUNCTION. -------======= \\
   } else if (paused) {
-    console.log("Game is paused");
+    console.log("Game Is Paused");
     return;
   }
 }
