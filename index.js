@@ -300,7 +300,65 @@ class Enemy {
 
 // -------======= THIS CODE RESTORES THE MOST RECENT SAVED CANVAS STATE. -------======= \\
       c.restore(); 
-    }
+
+// -------======= THE CODE CHECKS IF THE SHAPE OF THE ENEMY IS A "CENTIPEDE". -------======= \\
+    } else if (this.shape === "centipede") {
+
+// -------======= DETERMINES HOW MANY CIRCLES ARE IN THE CENTIPEDE. IN THIS CASE, THERE ARE 6 SEGMENTS. -------======= \\
+      let numSegments = 8; 
+
+// -------======= SETS THE DISTANCE BETWEEN EACH CIRCLE SEGMENT. -------======= \\
+      let segmentSpacing = 45; 
+
+// -------======= CALCULATES THE X POSITION OF THE STARTING POINT OF THE CENTIPEDE. -------======= \\
+
+      let startX = this.x - numSegments * segmentSpacing / 2; 
+
+// -------======= THEN IT LOOPS THROUGH EACH SEGMENT AND DRAWS A CIRCLE AT THE SPECIFIED X AND Y -------======= \\
+      for (let i = 0; i < numSegments; i++) {
+       
+// -------======= THIS PART OF THE CODE DRAWS EACH SEGMENT OF THE CENTIPEDE BY CREATING A CIRCLE SHAPED SEGMENT -------======= \\
+          c.arc(startX + i * segmentSpacing, this.y, this.radius, 0, Math.PI * 2, false);
+
+// -------======= SETS THE FILL COLOR OF THE CIRCLE TO THE SPECIFIED COLOR -------======= \\
+          c.fillStyle = this.color;
+
+// -------======= FILLS THE CIRCLE WITH THE SPECIFIED COLOR, COMPLETING THE DRAWING OF THE SEGMENT. -------======= \\
+          c.fill();
+      }
+
+// -------======= LOOPS THROUGH EACH SEGMENT OF THE CENTIPEDE EXCEPT THE LAST ONE. -------======= \\
+      for (let i = 0; i < numSegments - 1; i++) {
+
+// -------======= CALCULATES THE STARTING X POSITION OF THE LINE FOR THIS SEGMENT. -------======= \\
+          let segmentStartX = startX + i * segmentSpacing + this.radius;
+
+// -------======= CALCULATES THE ENDING X POSITION OF THE LINE FOR THIS SEGMENT. -------======= \\
+          let segmentEndX = startX + (i + 1) * segmentSpacing - this.radius;
+
+// -------======= BEGINS A NEW PATH TO DRAW THE LINE SEGMENT. -------======= \\
+          c.beginPath();
+
+// -------======= MOVES THE PEN TO THE STARTING POINT OF THE LINE SEGMENT -------======= \\
+          c.moveTo(segmentStartX, this.y);
+
+// -------======= DRAWS A LINE FROM THE STARTING POINT TO THE ENDING POINT ALONG THE Y POSITION OF THE CENTIPEDE -------======= \\
+          c.lineTo(segmentEndX, this.y);
+
+// -------======= SETS THE STROKE COLOR OF THE LINE TO MATCH THE COLOR OF THE CENTIPEDE. -------======= \\
+          c.strokeStyle = this.color;
+
+// -------======= STROKES (DRAW) THE LINE SEGMENT ON THE CANVAS. -------======= \\
+          c.stroke();
+      }
+
+// -------======= CHECKS IF THE SEGMENT'S SHAPE IS A CIRCLE. -------======= \\
+  } else if (this.shape === "circle") {
+      c.arc(this.x, this.y, this.radius, 0, Math.PI * 1, false);
+     
+  }
+
+  c.closePath();
 
 // -------======= THIS CODE FILLS A SHAPE WITH A SPECIFIED COLOR, ADDS A GLOW EFFECT USING A WHITE SHADOW, AND FILLS THE SHAPE AGAIN TO CREATE A GLOWING EFFECT. -------======= \\  
     c.fillStyle = this.color;
@@ -410,6 +468,7 @@ function spawnEnemies() {
         "boss2",
         "boss3",
         "boss4",
+        "centipede",
       ];
       const selectedShape = shapes[Math.floor(Math.random() * shapes.length)]; 
 
@@ -422,7 +481,7 @@ function spawnEnemies() {
 
 // -------=======  CREATES NEW ENEMIES WITH SPECIFIED PARAMETERS AND ADDS THEM TO THE "enemies" ARRAY AT A SET INTERVAL OF 2600 MILLISECONDS. -------======= \\
       enemies.push(new Enemy(x, y, radius, color, velocity, selectedShape));
-    }, 2600);
+    }, 2800);
 
 // -------======= CHECKS IF THE GAME IS PAUSED, AND IF IT IS, DISPLAYS A MESSAGE ("Game is paused") IN THE CONSOLE AND EXITS THE FUNCTION. -------======= \\
   } else if (paused) {
