@@ -12,6 +12,7 @@
   "dependencies": {
     "express": "^4.19.2",
     "express-handlebars": "^7.1.2",
+    "graphql": "^16.8.1",
     "inquirer": "^8.2.6",
     "mysql2": "^3.9.3"
   }

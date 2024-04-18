@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHIP SHAPE - Scoreboard </title>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/
+    tailwind.min.css" rel="stylesheet"
+    />
+    <link rel="stylesheet" href="score.css">
+</head>
+<body>
+    <table id="scoreTable">
+        <thead>
+          <h2>Current Score Rankings</h2>
+          <tr>
+            <th>Score</th>
+            <th>Shapes Destroyed</th>
+          </tr>
+        </thead>
+        <tbody id="scoreBody">
+          <!-- Scores and shapes will be dynamically added here -->
+ 
+          <div id="input-area">
+            <input placeholder="Enter Initials Here (E.G)" id="input">
+
+            <button id="submit">Submit</button>
+          </div>
+
+          <ul id="scoreboard">   
+          </ul>
+          <div id="end-btns">
+              <button id="returnButton" class="Return">
+              Return Home
+              </button>
+  
+              <button id="clear">
+              Clear
+              </button>
+          </div>
+        </tbody>
+      </table>  
+</body>
+</html>

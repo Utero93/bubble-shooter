@@ -15,6 +15,18 @@ const startGameBtn = document.querySelector("#startGameBtn");
 const modalEl = document.querySelector("#modalEl");
 const bigScoreEl = document.querySelector("#bigScoreEl");
 
+
+
+
+// Variables for the scoreboard section 
+let inputEl = document.getElementById("input");
+let submitEl = document.getElementById("submit");
+let finalScoreEl = document.getElementById("finalscore");
+let scoreSectionEl = document.getElementById("score");
+let scoreboardEl = document.getElementById("scorebody");
+let retryEl = document.getElementById("retry");
+let clearEl = document.getElementById("clear");
+
 // -------======= THIS CODE DEFINES THE CLASS PLAYER THAT DESCRIBES A PLAYER OBJECT WITH POSITION (X AND Y COORDINATES), SIZE (RADIUS), COLOR. -------======= \\
 class Player {
   constructor(x, y, radius, color) {
@@ -286,9 +298,67 @@ class Enemy {
       c.fill();
       c.closePath();
 
-      // -------======= THIS CODE RESTORES THE MOST RECENT SAVED CANVAS STATE. -------======= \\
-      c.restore();
-    }
+// -------======= THIS CODE RESTORES THE MOST RECENT SAVED CANVAS STATE. -------======= \\
+      c.restore(); 
+
+// -------======= THE CODE CHECKS IF THE SHAPE OF THE ENEMY IS A "CENTIPEDE". -------======= \\
+    } else if (this.shape === "centipede") {
+
+// -------======= DETERMINES HOW MANY CIRCLES ARE IN THE CENTIPEDE. IN THIS CASE, THERE ARE 6 SEGMENTS. -------======= \\
+      let numSegments = 8; 
+
+// -------======= SETS THE DISTANCE BETWEEN EACH CIRCLE SEGMENT. -------======= \\
+      let segmentSpacing = 45; 
+
+// -------======= CALCULATES THE X POSITION OF THE STARTING POINT OF THE CENTIPEDE. -------======= \\
+
+      let startX = this.x - numSegments * segmentSpacing / 2; 
+
+// -------======= THEN IT LOOPS THROUGH EACH SEGMENT AND DRAWS A CIRCLE AT THE SPECIFIED X AND Y -------======= \\
+      for (let i = 0; i < numSegments; i++) {
+       
+// -------======= THIS PART OF THE CODE DRAWS EACH SEGMENT OF THE CENTIPEDE BY CREATING A CIRCLE SHAPED SEGMENT -------======= \\
+          c.arc(startX + i * segmentSpacing, this.y, this.radius, 0, Math.PI * 2, false);
+
+// -------======= SETS THE FILL COLOR OF THE CIRCLE TO THE SPECIFIED COLOR -------======= \\
+          c.fillStyle = this.color;
+
+// -------======= FILLS THE CIRCLE WITH THE SPECIFIED COLOR, COMPLETING THE DRAWING OF THE SEGMENT. -------======= \\
+          c.fill();
+      }
+
+// -------======= LOOPS THROUGH EACH SEGMENT OF THE CENTIPEDE EXCEPT THE LAST ONE. -------======= \\
+      for (let i = 0; i < numSegments - 1; i++) {
+
+// -------======= CALCULATES THE STARTING X POSITION OF THE LINE FOR THIS SEGMENT. -------======= \\
+          let segmentStartX = startX + i * segmentSpacing + this.radius;
+
+// -------======= CALCULATES THE ENDING X POSITION OF THE LINE FOR THIS SEGMENT. -------======= \\
+          let segmentEndX = startX + (i + 1) * segmentSpacing - this.radius;
+
+// -------======= BEGINS A NEW PATH TO DRAW THE LINE SEGMENT. -------======= \\
+          c.beginPath();
+
+// -------======= MOVES THE PEN TO THE STARTING POINT OF THE LINE SEGMENT -------======= \\
+          c.moveTo(segmentStartX, this.y);
+
+// -------======= DRAWS A LINE FROM THE STARTING POINT TO THE ENDING POINT ALONG THE Y POSITION OF THE CENTIPEDE -------======= \\
+          c.lineTo(segmentEndX, this.y);
+
+// -------======= SETS THE STROKE COLOR OF THE LINE TO MATCH THE COLOR OF THE CENTIPEDE. -------======= \\
+          c.strokeStyle = this.color;
+
+// -------======= STROKES (DRAW) THE LINE SEGMENT ON THE CANVAS. -------======= \\
+          c.stroke();
+      }
+
+// -------======= CHECKS IF THE SEGMENT'S SHAPE IS A CIRCLE. -------======= \\
+  } else if (this.shape === "circle") {
+      c.arc(this.x, this.y, this.radius, 0, Math.PI * 1, false);
+     
+  }
+
+  c.closePath();
 
     // -------======= THIS CODE FILLS A SHAPE WITH A SPECIFIED COLOR, ADDS A GLOW EFFECT USING A WHITE SHADOW, AND FILLS THE SHAPE AGAIN TO CREATE A GLOWING EFFECT. -------======= \\
     c.fillStyle = this.color;
@@ -398,6 +468,7 @@ function spawnEnemies() {
         "boss2",
         "boss3",
         "boss4",
+        "centipede",
       ];
       const selectedShape = shapes[Math.floor(Math.random() * shapes.length)];
 
@@ -410,7 +481,7 @@ function spawnEnemies() {
 
       // -------=======  CREATES NEW ENEMIES WITH SPECIFIED PARAMETERS AND ADDS THEM TO THE "enemies" ARRAY AT A SET INTERVAL OF 2600 MILLISECONDS. -------======= \\
       enemies.push(new Enemy(x, y, radius, color, velocity, selectedShape));
-    }, 2600);
+    }, 2800);
 
     // -------======= CHECKS IF THE GAME IS PAUSED, AND IF IT IS, DISPLAYS A MESSAGE ("Game is paused") IN THE CONSOLE AND EXITS THE FUNCTION. -------======= \\
   } else if (paused) {
@@ -723,3 +794,136 @@ function startGame() {
 startGameBtn.addEventListener("click", () => {
   startGame();
 });
+
+
+
+
+
+// This will automatically display the saved list of users high score
+scoreEl.addEventListener("click", function(){
+
+  /* This function uses the .remove method for home, quiz, end(El) variables
+   storing the id="name value" for each section in the html file 
+   It also removes the contents timer and score within the container of the home page
+  */
+  
+      modalEl.remove();
+      bigScoreEl.remove();
+    
+  
+  
+  /* Line 67 is displaying the score section 
+     and all of its contents on the web page in the browser
+  */
+      scoreSectionEl.style.display = "block";
+  
+      getScores();
+  });
+  
+  // Submits the users intials and scores
+  submitEl.addEventListener("click", function(){
+  
+      modalEl.remove();
+      scoreEl.remove();
+      scoreSectionEl.style.display = "block";
+  
+  // Sets the value for the text area in the section for inputting scores
+      setScore();
+  
+  // Gets the value from the text within the scores section
+      getScores();
+  });
+  
+  // Allows the user to retry the quiz
+  retryEl.addEventListener("click", function(){
+  
+  // reloads the location of the contents in the variable retryEl()
+      location.reload();
+  });
+  
+  // clears the scoreboard with the users saved data from the local storage
+  clearEl.addEventListener("click", function(){
+  
+  // sets the value to a string "score history" with the value of an empty array
+      localStorage.setItem("scoreHistory", "[]");
+  
+  // reloads the page with a cleared local storage
+      location.reload();
+  });
+  
+  // saves the users current quiz score
+  function setScore(){
+      let initials = inputEl.value.toUpperCase();
+  
+      console.log(initials);
+  
+  // When user doesnt enter initials, the value is then saved to "unknown" by default
+  if(initials === ''){
+      initials = "Unknown";
+  }
+  
+  let scoreHistory = [];
+  let newScore = {
+      name: initials,
+      score: score
+  }
+  
+  let lastStorage = localStorage.getItem("scoreHistory");
+  
+  // If the saved local storage exists, getItem from the local storage and pass through array in scoreHistory
+  if (lastStorage !== null){
+      scoreHistory = JSON.parse(lastStorage);
+  }
+  
+  // adds new score to the values of the array store in the variable scoreHistory
+  scoreHistory.push(newScore);
+  
+  // Uses the saved data from Local storage to setItem to the string of text and using the json to turn the key/value pairs stored in the scoreHistory array into a string
+  localStorage.setItem("scoreHistory", JSON.stringify(scoreHistory));
+  
+  console.log(scoreHistory);
+  
+  }
+  
+  // This function retrieves scores from data saveed to the local storage
+  function getScores(){
+  
+  let scoreHistory = JSON.parse(localStorage.getItem("scoreHistory"));
+  
+  // This function sorts the scoreboard array by score in descending order
+  scoreHistory.sort(function(a, b) {
+      return b.score - a.score;
+  });
+  
+  // Creates the HTML table to display the scores saved to the score board
+  var table = document.createElement('table');
+  table.id = 'table';
+  var tableHead = table.createTHead();
+  var headRow = tableHead.insertRow(0);
+  headRow.insertCell(0).innerHTML = '<b>Name</b>';
+  headRow.insertCell(1).innerHTML = '<b>Score</b>';
+  
+  
+  // This function inserts values into the HTML table that was retrieved from the array stored in scoreHistory
+  
+  /* This for loop creates a var integer equal to 0, 
+  creates the condition that the integer is less than the length of the array in scoreHistory,
+  loop will run the code for the integer to increase by one until its larger than array.length
+  */
+  for (var i = 0; i < scoreHistory.length; i++) {
+  
+  /* this portion of the function creats the 'row' variable 
+     and sets it equal to the table using  the insertRow method
+     storing the value of an integer increasing by one   
+  */
+       var row = table.insertRow(i + 1);
+  
+  // These rows use the method insertcell with a value as a string property which equals the array's index stored in score history along with the name/score
+       row.insertCell(0).innerHTML = scoreHistory[i].name;
+       row.insertCell(1).innerHTML = scoreHistory[i].score;
+  }
+  
+  // this will render the table by the method appendChild given the id of table in the elements of the scoreboard
+  scoreboardEl.appendChild(table);
+  
+  }
