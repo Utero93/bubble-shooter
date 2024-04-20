@@ -1,0 +1,23 @@
+.img {
+    width: 128px;
+    height: 128px;
+}
+
+#big-img-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#img-container {
+    text-align: center;
+}
+
+#banner {
+    animation: revealText 2s forwards;
+    font-size: 120px;
+    font-style: oblique;
+    color: #ff6b00;
+    text-decoration: 2px underline white;
+    text-shadow: 0 0 5px #fff, 0 0 20px #ff6b00, 0 0 30px #ff6b00; /* Neon orange glow effect */
+    text-align: center;
+}
