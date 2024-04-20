@@ -19,20 +19,20 @@ alphaShipBtn.addEventListener("click", function () {
 
 betaShipBtn.addEventListener("click", function () {
   console.log(betaShip.getAttribute("src"));
-  window.location.href = '../index.html'
+  // window.location.href = '../index.html'
 });
 
 charlieShipBtn.addEventListener("click", function () {
   console.log(charlieShip.getAttribute("src"));
-  window.location.href = '../index.html'
+  // window.location.href = '../index.html'
 });
 
 deltaShipBtn.addEventListener("click", function () {
   console.log(deltaShip.getAttribute("src"));
-  window.location.href = '../index.html'
+  // window.location.href = '../index.html'
 });
 
 echoShipBtn.addEventListener("click", function () {
   console.log(echoShip.getAttribute("src"));
-  window.location.href = '../index.html'
+  // window.location.href = '../index.html'
 });
