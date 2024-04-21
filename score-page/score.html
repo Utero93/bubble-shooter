@@ -3,44 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHIP SHAPE - Scoreboard </title>
-    <link href="https://unpkg.com/tailwindcss@^1.0/dist/
-    tailwind.min.css" rel="stylesheet"
-    />
-    <link rel="stylesheet" href="score.css">
+    <title>SHIP SHAPE - Scoreboard</title>
+    <link
+    href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="./score.css" />
 </head>
 <body>
-    <table id="scoreTable">
-        <thead>
-          <h2>Current Score Rankings</h2>
-          <tr>
-            <th>Score</th>
-            <th>Shapes Destroyed</th>
-          </tr>
-        </thead>
-        <tbody id="scoreBody">
-          <!-- Scores and shapes will be dynamically added here -->
- 
-          <div id="input-area">
+
+
+    <section id="end">
+              
+        <h2>Complete!</h2>
+
+        <p id="finalscore"></p>
+
+        <div id="input-area">
             <input placeholder="Enter Initials Here (E.G)" id="input">
 
             <button id="submit">Submit</button>
-          </div>
+        </div>
 
-          <ul id="scoreboard">   
-          </ul>
-          <div id="end-btns">
-              <button id="returnButton" class="Return">
-              Return Home
-              </button>
-  
-              <button id="clear">
-              Clear
-              </button>
-          </div>
-        </tbody>
-      </table>  
+    </section>
+    
+
+    <section id="score">
+
+        <h2>Current Score Rankings</h2>
+
+        <ul id="scoreboard">   
+        </ul>
+        <div id="end-btns">
+            <button id="retry">
+                Retry
+            </button>
+
+            <button id="clear">
+                Clear
+            </button>
+        </div>
+
+
+</section>
+<script type="module" src="./index.js"></script>
 </body>
-<script src="score.js">
-</script>
 </html>
