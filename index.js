@@ -27,6 +27,18 @@ let scoreboardEl = document.getElementById("scoreboard");
 let retryEl = document.getElementById("retry");
 let clearEl = document.getElementById("clear");
 
+// Variables for end game, input username 
+let endEl = document.getElementById("end");
+let submitEl = document.getElementById("submit");
+let inputEl = document.getElementById("input");
+let finalScoreEl = document.getElementById("finalscore");
+
+// Variables for the scoreboard section
+let scoreSectionEl = document.getElementById("score");
+let scoreboardEl = document.getElementById("scoreboard");
+let retryEl = document.getElementById("retry");
+let clearEl = document.getElementById("clear");
+
 let userShip = sessionStorage.getItem('userShip')
 let shipImage = userShip
 
