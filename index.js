@@ -26,14 +26,6 @@ let clearEl = document.getElementById("clear");
 
 let shipImage = "./spaceships/ships/brown.png";
 
-// let url = "https://opengameart.org/sites/default/files/shipsheet1.PNG";
-
-const background = new Image();
-background.src = "./assets/Spac-bg.png";
-background.onload = function () {
-  c.drawImage(background, 0, 0);
-};
-
 // -------======= THIS CODE DEFINES THE CLASS PLAYER THAT DESCRIBES A PLAYER OBJECT WITH POSITION (X AND Y COORDINATES), SIZE (RADIUS), COLOR. -------======= \\
 class Player {
   constructor(shipImage, x, y, radius, color) {
@@ -67,7 +59,10 @@ class Player {
     const background = new Image();
     background.src = "./assets/Spac-bg.png";
     background.onload = function () {
-      c.drawImage(background, 0, 0);
+      const ptrn = c.createPattern(background, 'repeat')
+      c.fillStyle = ptrn
+      c.fillRect(0, 0, canvas.width, canvas.height)
+      // c.drawImage(background, 0, 0);
     };
   }
 }
@@ -796,6 +791,7 @@ window.addEventListener("keydown", async (event) => {
 function startGame() {
   // -------======= IF THE GAME IS NOT PAUSED, -------======= \\
   if (paused === false) {
+    // loadBackground();
     // -------=======  IT INITIALIZES THE GAME -------======= \\
     init();
 
@@ -811,6 +807,7 @@ function startGame() {
 
     // -------======= HIDES A MODAL ELEMENT. IF THE GAME IS PAUSED, -------======= \\
     modalEl.style.display = "none";
+
   } else {
     // -------======= IT DISPLAYS A MESSAGE AND RETURNS WITHOUT STARTING THE GAME. -------======= \\
     console.log("Fatal Error! Game is starting in Pause");
