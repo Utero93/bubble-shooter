@@ -14,6 +14,8 @@ let clearEl = document.getElementById("clear");
 
 retryBtn.addEventListener('click', function() {
     window.location.href = "../characters-page/characters.html"
+retryBtn.addEventListener('click', function() {
+    window.location.href = "../characters-page/characters.html"
 })
 
 // This will automatically display the saved list of users high score
