@@ -10,29 +10,40 @@ const charlieShipBtn = document.getElementById("charlie-ship");
 const deltaShipBtn = document.getElementById("delta-ship");
 const echoShipBtn = document.getElementById("echo-ship");
 
+let userShip
+
 // gets the source of the imaage, use url instead? or will run into issues with file locations
 // on click, pass this information to the game and start the game with the user selected avater 
 alphaShipBtn.addEventListener("click", function () {
-  console.log(alphaShip.getAttribute("src"));
+  // gets the path of the image and slices the first period for the right location relative to the index.js
+  userShip = alphaShip.getAttribute("src").slice(1)
+  // stores the variable in the session
+  // if user chooses a different ship then it will overwrite the previous ship
+  sessionStorage.setItem('userShip', userShip)
+  // goes to the index.html and index.js which will be able to access this image via session storage
   window.location.href = '../index.html'
 });
 
 betaShipBtn.addEventListener("click", function () {
-  console.log(betaShip.getAttribute("src"));
-  // window.location.href = '../index.html'
+  userShip = betaShip.getAttribute("src").slice(1)
+  sessionStorage.setItem('userShip', userShip)
+  window.location.href = '../index.html'
 });
 
 charlieShipBtn.addEventListener("click", function () {
-  console.log(charlieShip.getAttribute("src"));
-  // window.location.href = '../index.html'
+  userShip = charlieShip.getAttribute("src").slice(1)
+  sessionStorage.setItem('userShip', userShip)
+  window.location.href = '../index.html'
 });
 
 deltaShipBtn.addEventListener("click", function () {
-  console.log(deltaShip.getAttribute("src"));
-  // window.location.href = '../index.html'
+  userShip = deltaShip.getAttribute("src").slice(1)
+  sessionStorage.setItem('userShip', userShip)
+  window.location.href = '../index.html'
 });
 
 echoShipBtn.addEventListener("click", function () {
-  console.log(echoShip.getAttribute("src"));
-  // window.location.href = '../index.html'
+  userShip = echoShip.getAttribute("src").slice(1)
+  sessionStorage.setItem('userShip', userShip)
+  window.location.href = '../index.html'
 });

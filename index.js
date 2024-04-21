@@ -24,7 +24,10 @@ let scoreboardEl = document.getElementById("scorebody");
 let retryEl = document.getElementById("retry");
 let clearEl = document.getElementById("clear");
 
-let shipImage = "./spaceships/ships/brown.png";
+
+let userShip = sessionStorage.getItem('userShip')
+let shipImage = userShip
+
 
 // -------======= THIS CODE DEFINES THE CLASS PLAYER THAT DESCRIBES A PLAYER OBJECT WITH POSITION (X AND Y COORDINATES), SIZE (RADIUS), COLOR. -------======= \\
 class Player {
@@ -48,21 +51,22 @@ class Player {
 
   // add center positioning
   draw() {
-    const image = new Image();
-    image.src = this.shipImage;
-    image.onload = () => {
-      c.beginPath();
-      c.drawImage(image, this.x, this.y);
-    };
-
-    // fix the resize
+    // draws the background first and then repeats the it until window is filled
     const background = new Image();
     background.src = "./assets/Spac-bg.png";
     background.onload = function () {
       const ptrn = c.createPattern(background, 'repeat')
       c.fillStyle = ptrn
       c.fillRect(0, 0, canvas.width, canvas.height)
-      // c.drawImage(background, 0, 0);
+    };
+
+    // draws the image for the player's ship
+    // MUST GO AFTER THE BACKGROUND OR THE BACKGROUND WILL COVER THE SHIP
+    const image = new Image();
+    image.src = this.shipImage;
+    image.onload = () => {
+      c.beginPath();
+      c.drawImage(image, this.x, this.y);
     };
   }
 }
