@@ -10,7 +10,7 @@ body {
 }
 
 
-#score {
+#end {
     font-size: 24px;
     color: white;
     background-color: black;
@@ -19,7 +19,7 @@ body {
     padding: 10px 20px;
 }
 
-#score-board {
+#finalscore {
     font-size: 24px;
     color: white;
     background-color: black;
@@ -28,7 +28,24 @@ body {
     padding: 10px 20px;
 }
 
-#end-btns {
+#input-area {
+    font-size: 24px;
+    color: white;
+    background-color: black;
+    border: 4px double #ff6b00;
+    border-radius: 30px;
+    padding: 10px 20px;
+}
+#input {
+    font-size: 24px;
+    color: white;
+    background-color: black;
+    border: 4px double #ff6b00;
+    border-radius: 30px;
+    padding: 10px 20px;
+}
+
+#submit {
     font-size: 24px;
     color: white;
     background-color: black;
