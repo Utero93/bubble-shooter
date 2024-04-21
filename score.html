@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHIP SHAPE - Scoreboard</title>
+    <link
+    href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="./score.css" />
+</head>
+<body>
+
+
+    <section id="end">
+              
+        <h2>Complete!</h2>
+
+        <p id="finalscore"></p>
+
+        <div id="input-area">
+            <input placeholder="Enter Initials Here (E.G)" id="input">
+
+            <button id="submit">Submit</button>
+        </div>
+
+    </section>
+    
+
+    <section id="score">
+
+        <h2>Current Score Rankings</h2>
+
+        <ul id="scoreboard">   
+        </ul>
+        <div id="end-btns">
+            <button id="retry">
+                Retry
+            </button>
+
+            <button id="clear">
+                Clear
+            </button>
+        </div>
+
+
+</section>
+<script type="module" src="./index.js"></script>
+</body>
+</html>
