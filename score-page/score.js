@@ -1,4 +1,4 @@
-const homeBtn = document.getElementById('returnButton')
+const retryBtn = document.getElementById('retry')
 
 // Variables for end game, input username 
 let endEl = document.getElementById("end");
@@ -12,8 +12,8 @@ let scoreboardEl = document.getElementById("scoreboard");
 let retryEl = document.getElementById("retry");
 let clearEl = document.getElementById("clear");
 
-homeBtn.addEventListener('click', function() {
-    window.location.href = "../index.html"
+retryBtn.addEventListener('click', function() {
+    window.location.href = "../characters-page/characters.html"
 })
 
 // This will automatically display the saved list of users high score
