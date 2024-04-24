@@ -29,6 +29,7 @@ let clearEl = document.getElementById("clear");
 
 let userShip = sessionStorage.getItem('userShip')
 let shipImage = userShip
+let userScore = sessionStorage.getItem('scoreEl')
 
 
 // -------======= THIS CODE DEFINES THE CLASS PLAYER THAT DESCRIBES A PLAYER OBJECT WITH POSITION (X AND Y COORDINATES), SIZE (RADIUS), COLOR. -------======= \\
@@ -845,7 +846,7 @@ let newScore = {
   scoresEl: score
 }
 
-let lastStorage = sessionStorage.getItem("scoreHistory");
+let lastStorage = sessionStorage.getItem("userShip", "scoreEl");
 
 // If the saved local storage exists, getItem from the local storage and pass through array in scoreHistory
 if (lastStorage !== null){
