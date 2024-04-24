@@ -10,12 +10,10 @@ const betaShipBtn = document.getElementById("beta-ship");
 const charlieShipBtn = document.getElementById("charlie-ship");
 const deltaShipBtn = document.getElementById("delta-ship");
 const echoShipBtn = document.getElementById("echo-ship");
-const gammaShipBtn = document.getElementById("gamma-ship");
 
-
+const username = document.getElementById("input");
 
 let userShip
-
 
 
 // gets the source of the imaage, use url instead? or will run into issues with file locations
