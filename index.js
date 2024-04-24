@@ -19,7 +19,7 @@ const bigScoreEl = document.querySelector("#bigScoreEl");
 let endEl = document.getElementById("end");
 let submitEl = document.getElementById("submit");
 let inputEl = document.getElementById("input");
-let finalScoreEl = document.getElementById("finalscore");
+// let finalScoreEl = document.getElementById("finalscore");
 
 // Variables for the scoreboard section
 let scoreSectionEl = document.getElementById("score");
@@ -42,6 +42,7 @@ let clearEl = document.getElementById("clear");
 let userShip = sessionStorage.getItem('userShip')
 let shipImage = userShip
 let userScore = sessionStorage.getItem('scoreEl')
+console.log(userScore);
 
 
 // -------======= THIS CODE DEFINES THE CLASS PLAYER THAT DESCRIBES A PLAYER OBJECT WITH POSITION (X AND Y COORDINATES), SIZE (RADIUS), COLOR. -------======= \\
@@ -842,80 +843,40 @@ startGameBtn.addEventListener("click", () => {
 
 
 
-function setScore(){
+function setScore() {
   let initials = inputEl.value.toUpperCase();
-
   console.log(initials);
 
-// When user doesnt enter initials, the value is then saved to "unknown" by default
-if(initials === ''){
-  initials = "Unknown";
-}
+  // Set default value "Unknown" if initials are not entered by the user
+  if (initials === '') {
+      initials = "Unknown";
+  }
 
-let scoreHistory = [];
-let newScore = {
-  userShip: initials,
-  scoresEl: score
-}
+  let newScore = {
+      userShip: initials,
+      score: score
+  };
 
-let lastStorage = sessionStorage.getItem("userShip", "scoreEl");
+  let scoreHistory = JSON.parse(localStorage.getItem('scoreHistory')) || [];
+  scoreHistory.push(newScore);
 
-// If the saved local storage exists, getItem from the local storage and pass through array in scoreHistory
-if (lastStorage !== null){
-  scoreHistory = JSON.parse(lastStorage);
-}
+  // Store the updated score history in local storage
+  localStorage.setItem('scoreHistory', JSON.stringify(scoreHistory));
 
-// adds new score to the values of the array store in the variable scoreHistory
-scoreHistory.push(newScore);
+  // Retrieve the user's selected ship from session storage
+  let userShip = sessionStorage.getItem('userShip');
+  console.log('userShip', userShip);
 
-// Uses the saved data from Local storage to setItem to the string of text and using the json to turn the key/value pairs stored in the scoreHistory array into a string
-localStorage.setItem("scoreHistory", JSON.stringify(scoreHistory));
+  // Display the user's ship and score in a table on the scores page
+  const table = document.querySelector('#scoresTable');
 
-console.log(scoreHistory);
+  // Create a new row for the user's data
+  let row = table.insertRow();
+  let cell1 = row.insertCell(0);
+  let cell2 = row.insertCell(1);
 
-}
-
-// This function retrieves scores from data saveed to the local storage
-function getScores(){
-
-let scoreHistory = JSON.parse(localStorage.getItem("scoreHistory"));
-
-// This function sorts the scoreboard array by score in descending order
-scoreHistory.sort(function(a, b) {
-  return b.score - a.score;
-});
-
-// Creates the HTML table to display the scores saved to the score board
-var table = document.createElement('table');
-table.id = 'table';
-var tableHead = table.createTHead();
-var headRow = tableHead.insertRow(0);
-headRow.insertCell(0).innerHTML = '<b>Name</b>';
-headRow.insertCell(1).innerHTML = '<b>Score</b>';
-
-
-// This function inserts values into the HTML table that was retrieved from the array stored in scoreHistory
-
-/* This for loop creates a var integer equal to 0, 
-creates the condition that the integer is less than the length of the array in scoreHistory,
-loop will run the code for the integer to increase by one until its larger than array.length
-*/
-for (var i = 0; i < scoreHistory.length; i++) {
-
-/* this portion of the function creates the 'row' variable 
- and sets it equal to the table using  the insertRow method
- storing the value of an integer increasing by one   
-*/
-   var row = table.insertRow(i + 1);
-
-// These rows use the method insertcell with a value as a string property which equals the array's index stored in score history along with the name/score
-   row.insertCell(0).innerHTML = scoreHistory[i].name;
-   row.insertCell(1).innerHTML = scoreHistory[i].score;
-}
-
-// this will render the table by the method appendChild given the id of table in the elements of the scoreboard
-scoreboardEl.appendChild(table);
-
+  cell1.textContent = userShip;
+  cell2.textContent = score;
 }
 
 
