@@ -10,7 +10,10 @@ const charlieShipBtn = document.getElementById("charlie-ship");
 const deltaShipBtn = document.getElementById("delta-ship");
 const echoShipBtn = document.getElementById("echo-ship");
 
+const username = document.getElementById("input");
+
 let userShip
+
 
 // gets the source of the imaage, use url instead? or will run into issues with file locations
 // on click, pass this information to the game and start the game with the user selected avater 
