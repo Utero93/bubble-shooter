@@ -15,8 +15,8 @@ const startGameBtn = document.querySelector("#startGameBtn");
 const modalEl = document.querySelector("#modalEl");
 const bigScoreEl = document.querySelector("#bigScoreEl");
 
-// Variables for end game, input username
-let usernameEl = document.getElementById("username");
+// Variables for end game, input username 
+let username = document.getElementById('username')
 let endEl = document.getElementById("end");
 let submitEl = document.getElementById("submit");
 let inputEl = document.getElementById("input");
@@ -29,6 +29,7 @@ let scoreboardEl = document.getElementById("scoreboard");
 let retryEl = document.getElementById("retry");
 let clearEl = document.getElementById("clear");
 
+username.textContent = "Welcome " + sessionStorage.getItem('username')
 let userShip = sessionStorage.getItem('userShip')
 let shipImage = userShip
 
@@ -72,13 +73,14 @@ class Player {
     image.src = this.shipImage;
     image.onload = () => {
       // gets the dimension of the image of the ship
-      let shipWidth = image.width;
-      let shipHeight = image.height;
+      let shipWidth = image.width
+      let shipHeight = image.height
       // offsets the centering by subtracting half of the width and height from the postion
       // TRUE CENTER
-      let shipPositionX = this.x - shipWidth / 2;
-      let shipPositionY = this.y - shipHeight / 2;
+      let shipPositionX = this.x - (shipWidth / 2)
+      let shipPositionY = this.y - (shipHeight / 2)
       c.beginPath();
+      c.drawImage(image, shipPositionX, shipPositionY);
       c.drawImage(image, shipPositionX, shipPositionY);
     };
   }
@@ -138,7 +140,14 @@ class Projectile {
     // // -------======= THIS CODE CHECKS IF THE ELEMENT IS REACHING THE SIDES OF THE CANVAS WIDTH. IF IT IS, IT REVERSES THE HORIZONTAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES. -------======= \\
     // if (this.x - this.radius <= 0 || this.x + this.radius >= canvas.width) {
     //   this.velocity.x = -this.velocity.x; // IF IT IS, IT REVERSES THE HORIZONTAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES.
+    // // -------======= THIS CODE CHECKS IF THE ELEMENT IS REACHING THE SIDES OF THE CANVAS WIDTH. IF IT IS, IT REVERSES THE HORIZONTAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES. -------======= \\
+    // if (this.x - this.radius <= 0 || this.x + this.radius >= canvas.width) {
+    //   this.velocity.x = -this.velocity.x; // IF IT IS, IT REVERSES THE HORIZONTAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES.
 
+    //   // -------=======  IT ALSO CHANGES THE COLOR AND SHAPE OF THE ELEMENT. -------======= \\
+    //   this.color = "blue";
+    //   this.shape = "one";
+    // }
     //   // -------=======  IT ALSO CHANGES THE COLOR AND SHAPE OF THE ELEMENT. -------======= \\
     //   this.color = "blue";
     //   this.shape = "one";
@@ -147,7 +156,13 @@ class Projectile {
     // -------======= THIS CODE CHECKS IF THE ELEMENT IS REACHING THE TOP OR BOTTOM OF THE CANVAS HEIGHT. -------======= \\
     // if (this.y - this.radius <= 0 || this.y + this.radius >= canvas.height) {
     //   this.velocity.y = -this.velocity.y; // IF IT IS, IT REVERSES THE VERTICAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES.
+    // if (this.y - this.radius <= 0 || this.y + this.radius >= canvas.height) {
+    //   this.velocity.y = -this.velocity.y; // IF IT IS, IT REVERSES THE VERTICAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES.
 
+    //   // -------=======  IT ALSO CHANGES THE COLOR AND SHAPE OF THE ELEMENT. -------======= \\
+    //   this.color = "blue";
+    //   this.shape = "one";
+    // }
     //   // -------=======  IT ALSO CHANGES THE COLOR AND SHAPE OF THE ELEMENT. -------======= \\
     //   this.color = "blue";
     //   this.shape = "one";
@@ -591,6 +606,8 @@ function animate() {
         if (dist - enemy.radius - projectile.radius < 1) {
           // const explosionSound = new Audio("./assets/burst.wav");
           // explosionSound.play();
+          // const explosionSound = new Audio("./assets/burst.wav");
+          // explosionSound.play();
 
           // // -------======= CREATES MULTIPLE PARTICLES AT THE PROJECTILE'S POSITION WITH RANDOM SPEEDS AND COLORS, TO SIMULATE AN EXPLOSION EFFECT. -------======= \\
           // for (let i = 0; i < enemy.radius * 2; i++) {
@@ -600,7 +617,23 @@ function animate() {
           //       projectile.y,
           //       Math.random() * 2,
           //       enemy.color,
+          // // -------======= CREATES MULTIPLE PARTICLES AT THE PROJECTILE'S POSITION WITH RANDOM SPEEDS AND COLORS, TO SIMULATE AN EXPLOSION EFFECT. -------======= \\
+          // for (let i = 0; i < enemy.radius * 2; i++) {
+          //   particles.push(
+          //     new Particle(
+          //       projectile.x,
+          //       projectile.y,
+          //       Math.random() * 2,
+          //       enemy.color,
 
+          //       // -------======= GENERATES RANDOM X AND Y VALUES FOR THE PARTICLE'S MOVEMENT TO CREATE A RANDOMIZED DIRECTION FOR EACH PARTICLE. -------======= \\
+          //       {
+          //         x: (Math.random() - 0.5) * (Math.random() * 8),
+          //         y: (Math.random() - 0.5) * (Math.random() * 8),
+          //       }
+          //     )
+          //   );
+          // }
           //       // -------======= GENERATES RANDOM X AND Y VALUES FOR THE PARTICLE'S MOVEMENT TO CREATE A RANDOMIZED DIRECTION FOR EACH PARTICLE. -------======= \\
           //       {
           //         x: (Math.random() - 0.5) * (Math.random() * 8),
