@@ -5,13 +5,12 @@ const deltaShip = document.getElementById("delta");
 const echoShip = document.getElementById("echo");
 const gammaShip = document.getElementById("gamma");
 
+
 const alphaShipBtn = document.getElementById("alpha-ship");
 const betaShipBtn = document.getElementById("beta-ship");
 const charlieShipBtn = document.getElementById("charlie-ship");
 const deltaShipBtn = document.getElementById("delta-ship");
 const echoShipBtn = document.getElementById("echo-ship");
-const gammaShipBtn = document.getElementById("gamma-ship");
-
 
 const usernameModal = document.getElementById("username-modal");
 const username = document.getElementById("input");
