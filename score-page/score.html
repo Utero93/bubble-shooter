@@ -1,37 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SHIP SHAPE - Scoreboard</title>
     <link
-    href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
-    rel="stylesheet"
-  />
-  <link rel="stylesheet" href="./score.css" />
-</head>
-<body>
-
+      href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./score.css" />
+  </head>
+  <body>
     <section id="score">
+      <h2>LEADER BOARD</h2>
+      <table id="scoretable">
+        <tr>
+            <th>Name</th>
+            <th>Score</th>
+        </tr>
+      </table>
 
-        <h2>LEADER BOARD</h2>
+      <ul id="scoreboard"></ul>
+      <div id="end-btns">
+        <button id="retry">Retry</button>
 
-      
-        <ul id="scoreboard">   
-        </ul>
-        <div id="end-btns">
-            <button id="retry">
-                Retry
-            </button>
-
-            <button id="clear">
-                Clear
-            </button>
-        </div>
-
-
-</section>
-<script type="module" src="./index.js"></script>
-<script src="./score.js"></script>
-</body>
+        <button id="clear">Clear</button>
+      </div>
+    </section>
+    <script type="module" src="./index.js"></script>
+    <script src="./score.js"></script>
+  </body>
 </html>
