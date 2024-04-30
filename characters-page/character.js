@@ -5,38 +5,18 @@ const deltaShip = document.getElementById("delta");
 const echoShip = document.getElementById("echo");
 const gammaShip = document.getElementById("gamma");
 
-
 const alphaShipBtn = document.getElementById("alpha-ship");
 const betaShipBtn = document.getElementById("beta-ship");
 const charlieShipBtn = document.getElementById("charlie-ship");
 const deltaShipBtn = document.getElementById("delta-ship");
 const echoShipBtn = document.getElementById("echo-ship");
+const gammaShipBtn = document.getElementById("gamma-ship");
 
-const usernameModal = document.getElementById("username-modal");
-const username = document.getElementById("input");
-const submiteBtn = document.getElementById("submit");
-const span = document.getElementsByClassName("close")[0];
 
-// on username submit, will store the users's input into session storage and redirect to the index (game page)
-submiteBtn.addEventListener("click", function () {
-  sessionStorage.setItem("username", username.value);
-  window.location.href = "../index.html";
-});
 
-// click on x to close modal
-span.addEventListener("click", function () {
-  usernameModal.style.display = "none";
-});
+let userShip
 
-// click outside modal to close modal
-window.onclick = function (event) {
-  if (event.target == usernameModal) {
-    usernameModal.style.display = "none";
-  }
-};
 
-// create empty vairable for ship, will change based on user choice
-let userShip;
 
 // gets the source of the imaage, use url instead? or will run into issues with file locations
 // on click, pass this information to the game and start the game with the user selected avater
@@ -71,4 +51,10 @@ echoShipBtn.addEventListener("click", function () {
   userShip = echoShip.getAttribute("src").slice(1);
   sessionStorage.setItem("userShip", userShip);
   usernameModal.style.display = "block";
+});
+
+gammaShipBtn.addEventListener("click", function () {
+  userShip = gammaShip.getAttribute("src").slice(1)
+  sessionStorage.setItem('userShip', userShip)
+  window.location.href = '../index.html'
 });
