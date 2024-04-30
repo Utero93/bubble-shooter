@@ -29,8 +29,8 @@ let clearEl = document.getElementById("clear");
 
 let userShip = sessionStorage.getItem('userShip')
 let shipImage = userShip
-let userScore = sessionStorage.getItem('scoreEl')
-console.log(userScore);
+
+let userScore = sessionStorage.setItem('userScore', scoresEl)
 
 
 // -------======= THIS CODE DEFINES THE CLASS PLAYER THAT DESCRIBES A PLAYER OBJECT WITH POSITION (X AND Y COORDINATES), SIZE (RADIUS), COLOR. -------======= \\
@@ -461,7 +461,7 @@ function init() {
   particles = [];
   score = 0;
   // -------======= SETTING SCORE TO ZERO, AND UPDATING SCORE DISPLAY ELEMENTS. -------======= \\
-  scoreEl.innerHTML = score;
+  scoresEl.innerHTML = score;
   bigScoreEl.innerHTML = score;
 }
 
@@ -529,7 +529,7 @@ function animate() {
   if (paused === false) {
     // -------======= CONTINUE ANIMATING BY DRAWING A SEMI-TRANSPARENT COLOR BACKGROUND -------======= \\
     animationId = requestAnimationFrame(animate);
-    c.fillStyle = "rgba(1.5, 1.5, 1.5, 0.5)";
+    c.fillStyle = "rgba(0, 0, 0, 0)";
     c.fillRect(0, 0, canvas.width, canvas.height);
 
     // -------======= DRAWING A PLAYER CHARACTER, AND UPDATING PARTICLES. -------======= \\
@@ -602,7 +602,7 @@ function animate() {
           // -------======= IF THE ENEMY'S RADIUS MINUS 10 IS GREATER THAN 5, INCREASE THE SCORE BY 100 AND UPDATE THE SCORE DISPLAY ON THE SCREEN. -------======= \\
           if (enemy.radius - 10 > 5) {
             score += 100;
-            scoreEl.innerHTML = score;
+            scoresEl.innerHTML = score;
             // -------======= THIS CODE ANIMATES THE ENEMY OBJECT BY CHANGING ITS RADIUS TO A VALUE 10 LESS THAN THE CURRENT RADIUS. -------======= \\
             gsap.to(enemy, {
               radius: enemy.radius - 10,
@@ -616,7 +616,7 @@ function animate() {
             // -------======= THIS INCREASES THE SCORE BY 250 POINTS, REMOVES BOTH THE ENEMY AND PROJECTILE FROM THEIR ARRAYS AFTER A DELAY OF 0 MILLISECONDS. -------======= \\
           } else {
             score += 250;
-            scoreEl.innerHTML = score;
+            scoresEl.innerHTML = score;
             setTimeout(() => {
               enemies.splice(index, 1);
               projectiles.splice(projectileIndex, 1);
@@ -842,7 +842,7 @@ function setScore() {
 
   let newScore = {
       userShip: initials,
-      score: score
+      userScore: score
   };
 
   let scoreHistory = JSON.parse(localStorage.getItem('scoreHistory')) || [];
@@ -855,8 +855,11 @@ function setScore() {
   let userShip = sessionStorage.getItem('userShip');
   console.log('userShip', userShip);
 
+  let userScore = sessionStorage.getItem('userScore');
+  console.log('userScore', userScore);
+
   // Display the user's ship and score in a table on the scores page
-  const table = document.querySelector('#scoresTable');
+  const table = document.querySelector('#scoreboard');
 
   // Create a new row for the user's data
   let row = table.insertRow();
@@ -864,7 +867,7 @@ function setScore() {
   let cell2 = row.insertCell(1);
 
   cell1.textContent = userShip;
-  cell2.textContent = score;
+  cell2.textContent = userScore;
 }
 
 
