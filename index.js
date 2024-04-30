@@ -29,14 +29,11 @@ let scoreboardEl = document.getElementById("scoreboard");
 let retryEl = document.getElementById("retry");
 let clearEl = document.getElementById("clear");
 
-// gets username from session storage and displays on screen
-let username = sessionStorage.getItem("username");
-usernameEl.textContent = username;
+let userShip = sessionStorage.getItem('userShip')
+let shipImage = userShip
 
-let userShip = sessionStorage.getItem("userShip");
-let shipImage = userShip;
-let userScore = sessionStorage.getItem("scoreEl");
-console.log(userScore);
+let userScore = sessionStorage.setItem('userScore', scoresEl)
+
 
 // -------======= THIS CODE DEFINES THE CLASS PLAYER THAT DESCRIBES A PLAYER OBJECT WITH POSITION (X AND Y COORDINATES), SIZE (RADIUS), COLOR. -------======= \\
 class Player {
@@ -474,6 +471,7 @@ function init() {
   score = 0;
   // -------======= SETTING SCORE TO ZERO, AND UPDATING SCORE DISPLAY ELEMENTS. -------======= \\
   scoresEl.innerHTML = score;
+  scoresEl.innerHTML = score;
   bigScoreEl.innerHTML = score;
 }
 
@@ -541,7 +539,6 @@ function animate() {
   if (paused === false) {
     // -------======= CONTINUE ANIMATING BY DRAWING A SEMI-TRANSPARENT COLOR BACKGROUND -------======= \\
     animationId = requestAnimationFrame(animate);
-    c.fillStyle = "rgba(0, 0, 0, 0)";
     c.fillStyle = "rgba(0, 0, 0, 0)";
     c.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -616,7 +613,6 @@ function animate() {
           if (enemy.radius - 10 > 5) {
             score += 100;
             scoresEl.innerHTML = score;
-            scoresEl.innerHTML = score;
             // -------======= THIS CODE ANIMATES THE ENEMY OBJECT BY CHANGING ITS RADIUS TO A VALUE 10 LESS THAN THE CURRENT RADIUS. -------======= \\
             gsap.to(enemy, {
               radius: enemy.radius - 10,
@@ -630,7 +626,6 @@ function animate() {
             // -------======= THIS INCREASES THE SCORE BY 250 POINTS, REMOVES BOTH THE ENEMY AND PROJECTILE FROM THEIR ARRAYS AFTER A DELAY OF 0 MILLISECONDS. -------======= \\
           } else {
             score += 250;
-            scoresEl.innerHTML = score;
             scoresEl.innerHTML = score;
             setTimeout(() => {
               enemies.splice(index, 1);
@@ -868,10 +863,10 @@ document.getElementById("scores").addEventListener("click", () => {
 //       initials = "Unknown";
 //   }
 
-//   let newScore = {
-//       userShip: initials,
-//       score: score
-//   };
+  let newScore = {
+      userShip: initials,
+      userScore: score
+  };
 
 //   let scoreHistory = JSON.parse(localStorage.getItem('scoreHistory')) || [];
 //   scoreHistory.push(newScore);
@@ -883,46 +878,25 @@ document.getElementById("scores").addEventListener("click", () => {
 //   // Store the updated score history in local storage
 //   localStorage.setItem('scoreHistory', JSON.stringify(scoreHistory));
 
-//   // Retrieve the user's selected ship from session storage
-//   let userShip = sessionStorage.getItem('userShip');
-//   console.log('userShip', userShip);
+  // Retrieve the user's selected ship from session storage
+  let userShip = sessionStorage.getItem('userShip');
+  console.log('userShip', userShip);
 
-//   // Display the user's ship and score in a table on the scores page
-//   const table = document.querySelector('#scoresTable');
+  let userScore = sessionStorage.getItem('userScore');
+  console.log('userScore', userScore);
+
+  // Display the user's ship and score in a table on the scores page
+  const table = document.querySelector('#scoreboard');
 
 //   // Create a new row for the user's data
 //   let row = table.insertRow();
 //   let cell1 = row.insertCell(0);
 //   let cell2 = row.insertCell(1);
-//   // Create a new row for the user's data
-//   let row = table.insertRow();
-//   let cell1 = row.insertCell(0);
-//   let cell2 = row.insertCell(1);
 
-//   cell1.textContent = userShip;
-//   cell2.textContent = score;
-// }
-
-// global empty variable
-let scoreHistory = [];
-
-// checks local storage for saved scores
-let savedScores = localStorage.getItem("scoreHistory");
-// if there is saved scores then parse the data and add it to the empty variable
-if (savedScores !== null) {
-  let parsedSavedScores = JSON.parse(savedScores);
-  scoreHistory = parsedSavedScores;
+  cell1.textContent = userShip;
+  cell2.textContent = userScore;
 }
 
-// stores the current user's name and score as an array
-// adds that array to the scoreHistory array
-// stringifies the array and adds to localStorage
-function setScore(param) {
-  let currentScore = [username, score];
-  scoreHistory.push(currentScore);
-  let stringifiedScoreHistory = JSON.stringify(scoreHistory);
-  localStorage.setItem("scoreHistory", stringifiedScoreHistory);
-}
 // global empty variable
 let scoreHistory = [];
 
