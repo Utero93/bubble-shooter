@@ -15,8 +15,7 @@ const startGameBtn = document.querySelector("#startGameBtn");
 const modalEl = document.querySelector("#modalEl");
 const bigScoreEl = document.querySelector("#bigScoreEl");
 
-// Variables for end game, input username
-let usernameEl = document.getElementById("username");
+// Variables for end game, input username 
 let endEl = document.getElementById("end");
 let submitEl = document.getElementById("submit");
 let inputEl = document.getElementById("input");
@@ -28,14 +27,11 @@ let scoreboardEl = document.getElementById("scoreboard");
 let retryEl = document.getElementById("retry");
 let clearEl = document.getElementById("clear");
 
-// gets username from session storage and displays on screen
-let username = sessionStorage.getItem("username");
-usernameEl.textContent = username;
+let userShip = sessionStorage.getItem('userShip')
+let shipImage = userShip
 
-let userShip = sessionStorage.getItem("userShip");
-let shipImage = userShip;
-let userScore = sessionStorage.getItem("scoreEl");
-console.log(userScore);
+let userScore = sessionStorage.setItem('userScore', scoresEl)
+
 
 // -------======= THIS CODE DEFINES THE CLASS PLAYER THAT DESCRIBES A PLAYER OBJECT WITH POSITION (X AND Y COORDINATES), SIZE (RADIUS), COLOR. -------======= \\
 class Player {
@@ -63,9 +59,9 @@ class Player {
     const background = new Image();
     background.src = "./assets/Spac-bg.png";
     background.onload = function () {
-      const ptrn = c.createPattern(background, "repeat");
-      c.fillStyle = ptrn;
-      c.fillRect(0, 0, canvas.width, canvas.height);
+      const ptrn = c.createPattern(background, 'repeat')
+      c.fillStyle = ptrn
+      c.fillRect(0, 0, canvas.width, canvas.height)
     };
 
     // draws the image for the player's ship
@@ -73,16 +69,8 @@ class Player {
     const image = new Image();
     image.src = this.shipImage;
     image.onload = () => {
-      // gets the dimension of the image of the ship
-      let shipWidth = image.width;
-      let shipHeight = image.height;
-      // offsets the centering by subtracting half of the width and height from the postion
-      // TRUE CENTER
-      let shipPositionX = this.x - shipWidth / 2;
-      let shipPositionY = this.y - shipHeight / 2;
       c.beginPath();
-      c.drawImage(image, shipPositionX, shipPositionY);
-      c.drawImage(image, shipPositionX, shipPositionY);
+      c.drawImage(image, this.x, this.y);
     };
   }
 }
@@ -138,36 +126,23 @@ class Projectile {
       }
     });
 
-    // // -------======= THIS CODE CHECKS IF THE ELEMENT IS REACHING THE SIDES OF THE CANVAS WIDTH. IF IT IS, IT REVERSES THE HORIZONTAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES. -------======= \\
-    // if (this.x - this.radius <= 0 || this.x + this.radius >= canvas.width) {
-    //   this.velocity.x = -this.velocity.x; // IF IT IS, IT REVERSES THE HORIZONTAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES.
-    // // -------======= THIS CODE CHECKS IF THE ELEMENT IS REACHING THE SIDES OF THE CANVAS WIDTH. IF IT IS, IT REVERSES THE HORIZONTAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES. -------======= \\
-    // if (this.x - this.radius <= 0 || this.x + this.radius >= canvas.width) {
-    //   this.velocity.x = -this.velocity.x; // IF IT IS, IT REVERSES THE HORIZONTAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES.
+    // -------======= THIS CODE CHECKS IF THE ELEMENT IS REACHING THE SIDES OF THE CANVAS WIDTH. IF IT IS, IT REVERSES THE HORIZONTAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES. -------======= \\
+    if (this.x - this.radius <= 0 || this.x + this.radius >= canvas.width) {
+      this.velocity.x = -this.velocity.x; // IF IT IS, IT REVERSES THE HORIZONTAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES.
 
-    //   // -------=======  IT ALSO CHANGES THE COLOR AND SHAPE OF THE ELEMENT. -------======= \\
-    //   this.color = "blue";
-    //   this.shape = "one";
-    // }
-    //   // -------=======  IT ALSO CHANGES THE COLOR AND SHAPE OF THE ELEMENT. -------======= \\
-    //   this.color = "blue";
-    //   this.shape = "one";
-    // }
+      // -------=======  IT ALSO CHANGES THE COLOR AND SHAPE OF THE ELEMENT. -------======= \\
+      this.color = "blue";
+      this.shape = "one";
+    }
 
     // -------======= THIS CODE CHECKS IF THE ELEMENT IS REACHING THE TOP OR BOTTOM OF THE CANVAS HEIGHT. -------======= \\
-    // if (this.y - this.radius <= 0 || this.y + this.radius >= canvas.height) {
-    //   this.velocity.y = -this.velocity.y; // IF IT IS, IT REVERSES THE VERTICAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES.
-    // if (this.y - this.radius <= 0 || this.y + this.radius >= canvas.height) {
-    //   this.velocity.y = -this.velocity.y; // IF IT IS, IT REVERSES THE VERTICAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES.
+    if (this.y - this.radius <= 0 || this.y + this.radius >= canvas.height) {
+      this.velocity.y = -this.velocity.y; // IF IT IS, IT REVERSES THE VERTICAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES.
 
-    //   // -------=======  IT ALSO CHANGES THE COLOR AND SHAPE OF THE ELEMENT. -------======= \\
-    //   this.color = "blue";
-    //   this.shape = "one";
-    // }
-    //   // -------=======  IT ALSO CHANGES THE COLOR AND SHAPE OF THE ELEMENT. -------======= \\
-    //   this.color = "blue";
-    //   this.shape = "one";
-    // }
+      // -------=======  IT ALSO CHANGES THE COLOR AND SHAPE OF THE ELEMENT. -------======= \\
+      this.color = "blue";
+      this.shape = "one";
+    }
   }
 }
 
@@ -487,6 +462,7 @@ function init() {
   score = 0;
   // -------======= SETTING SCORE TO ZERO, AND UPDATING SCORE DISPLAY ELEMENTS. -------======= \\
   scoresEl.innerHTML = score;
+  scoresEl.innerHTML = score;
   bigScoreEl.innerHTML = score;
 }
 
@@ -605,44 +581,26 @@ function animate() {
 
         // -------======= CHECKS IF THE PROJECTILE HAS HIT THE ENEMY BASED ON THE RADIUS OF BOTH OBJECTS. IF THEY ARE CLOSE ENOUGH, A SOUND EFFECT IS PLAYED. -------======= \\
         if (dist - enemy.radius - projectile.radius < 1) {
-          // const explosionSound = new Audio("./assets/burst.wav");
-          // explosionSound.play();
-          // const explosionSound = new Audio("./assets/burst.wav");
-          // explosionSound.play();
+          const explosionSound = new Audio("./assets/burst.wav");
+          explosionSound.play();
 
-          // // -------======= CREATES MULTIPLE PARTICLES AT THE PROJECTILE'S POSITION WITH RANDOM SPEEDS AND COLORS, TO SIMULATE AN EXPLOSION EFFECT. -------======= \\
-          // for (let i = 0; i < enemy.radius * 2; i++) {
-          //   particles.push(
-          //     new Particle(
-          //       projectile.x,
-          //       projectile.y,
-          //       Math.random() * 2,
-          //       enemy.color,
-          // // -------======= CREATES MULTIPLE PARTICLES AT THE PROJECTILE'S POSITION WITH RANDOM SPEEDS AND COLORS, TO SIMULATE AN EXPLOSION EFFECT. -------======= \\
-          // for (let i = 0; i < enemy.radius * 2; i++) {
-          //   particles.push(
-          //     new Particle(
-          //       projectile.x,
-          //       projectile.y,
-          //       Math.random() * 2,
-          //       enemy.color,
+          // -------======= CREATES MULTIPLE PARTICLES AT THE PROJECTILE'S POSITION WITH RANDOM SPEEDS AND COLORS, TO SIMULATE AN EXPLOSION EFFECT. -------======= \\
+          for (let i = 0; i < enemy.radius * 2; i++) {
+            particles.push(
+              new Particle(
+                projectile.x,
+                projectile.y,
+                Math.random() * 2,
+                enemy.color,
 
-          //       // -------======= GENERATES RANDOM X AND Y VALUES FOR THE PARTICLE'S MOVEMENT TO CREATE A RANDOMIZED DIRECTION FOR EACH PARTICLE. -------======= \\
-          //       {
-          //         x: (Math.random() - 0.5) * (Math.random() * 8),
-          //         y: (Math.random() - 0.5) * (Math.random() * 8),
-          //       }
-          //     )
-          //   );
-          // }
-          //       // -------======= GENERATES RANDOM X AND Y VALUES FOR THE PARTICLE'S MOVEMENT TO CREATE A RANDOMIZED DIRECTION FOR EACH PARTICLE. -------======= \\
-          //       {
-          //         x: (Math.random() - 0.5) * (Math.random() * 8),
-          //         y: (Math.random() - 0.5) * (Math.random() * 8),
-          //       }
-          //     )
-          //   );
-          // }
+                // -------======= GENERATES RANDOM X AND Y VALUES FOR THE PARTICLE'S MOVEMENT TO CREATE A RANDOMIZED DIRECTION FOR EACH PARTICLE. -------======= \\
+                {
+                  x: (Math.random() - 0.5) * (Math.random() * 8),
+                  y: (Math.random() - 0.5) * (Math.random() * 8),
+                }
+              )
+            );
+          }
           // -------======= IF THE ENEMY'S RADIUS MINUS 10 IS GREATER THAN 5, INCREASE THE SCORE BY 100 AND UPDATE THE SCORE DISPLAY ON THE SCREEN. -------======= \\
           if (enemy.radius - 10 > 5) {
             score += 100;
@@ -861,6 +819,7 @@ function startGame() {
 
     // -------======= HIDES A MODAL ELEMENT. IF THE GAME IS PAUSED, -------======= \\
     modalEl.style.display = "none";
+
   } else {
     // -------======= IT DISPLAYS A MESSAGE AND RETURNS WITHOUT STARTING THE GAME. -------======= \\
     console.log("Fatal Error! Game is starting in Pause");
@@ -873,46 +832,44 @@ startGameBtn.addEventListener("click", () => {
   startGame();
 });
 
-document.getElementById("scores").addEventListener("click", () => {
-  setScore();
-  window.location.href = "./score-page/score.html"; // Change this URL to the actual game page URL/
-});
 
-// function setScore() {
-//   let initials = inputEl.value.toUpperCase();
-//   console.log(initials);
 
-//   // Set default value "Unknown" if initials are not entered by the user
-//   if (initials === '') {
-//       initials = "Unknown";
-//   }
 
-  let newScore = {
-      userShip: initials,
-      score: score
-  };
+function setScore() {
+  let initials = inputEl.value.toUpperCase();
+  console.log(initials);
 
-//   let scoreHistory = JSON.parse(localStorage.getItem('scoreHistory')) || [];
-//   scoreHistory.push(newScore);
+  // Set default value "Unknown" if initials are not entered by the user
+  if (initials === '') {
+      initials = "Unknown";
+  }
 
-//   // Store the updated score history in local storage
-//   localStorage.setItem('scoreHistory', JSON.stringify(scoreHistory));
+//   let newScore = {
+//       userShip: initials,
+//       score: score
+//   };
+
+  let scoreHistory = JSON.parse(localStorage.getItem('scoreHistory')) || [];
+  scoreHistory.push(newScore);
+
+  // Store the updated score history in local storage
+  localStorage.setItem('scoreHistory', JSON.stringify(scoreHistory));
 
   // Retrieve the user's selected ship from session storage
   let userShip = sessionStorage.getItem('userShip');
   console.log('userShip', userShip);
 
-  // Display the user's ship and score in a table on the scores page
-  const table = document.querySelector('#scoresTable');
+//   // Display the user's ship and score in a table on the scores page
+//   const table = document.querySelector('#scoresTable');
 
-//   // Create a new row for the user's data
-//   let row = table.insertRow();
-//   let cell1 = row.insertCell(0);
-//   let cell2 = row.insertCell(1);
+  // Create a new row for the user's data
+  let row = table.insertRow();
+  let cell1 = row.insertCell(0);
+  let cell2 = row.insertCell(1);
 
-  cell1.textContent = userShip;
-  cell2.textContent = score;
-}
+//   cell1.textContent = userShip;
+//   cell2.textContent = score;
+// }
 
 // global empty variable
 let scoreHistory = [];
@@ -925,12 +882,5 @@ if (savedScores !== null) {
   scoreHistory = parsedSavedScores;
 }
 
-// stores the current user's name and score as an array
-// adds that array to the scoreHistory array
-// stringifies the array and adds to localStorage
-function setScore(param) {
-  let currentScore = [username, score];
-  scoreHistory.push(currentScore);
-  let stringifiedScoreHistory = JSON.stringify(scoreHistory);
-  localStorage.setItem("scoreHistory", stringifiedScoreHistory);
-}
+
+
