@@ -15,8 +15,8 @@ const startGameBtn = document.querySelector("#startGameBtn");
 const modalEl = document.querySelector("#modalEl");
 const bigScoreEl = document.querySelector("#bigScoreEl");
 
-// Variables for end game, input username 
-let username = document.getElementById('username')
+// Variables for end game, input username
+let usernameEl = document.getElementById("username");
 let endEl = document.getElementById("end");
 let submitEl = document.getElementById("submit");
 let inputEl = document.getElementById("input");
@@ -29,12 +29,14 @@ let scoreboardEl = document.getElementById("scoreboard");
 let retryEl = document.getElementById("retry");
 let clearEl = document.getElementById("clear");
 
-username.textContent = "Welcome " + sessionStorage.getItem('username')
-let userShip = sessionStorage.getItem('userShip')
-let shipImage = userShip
+// gets username from session storage and displays on screen
+let username = sessionStorage.getItem("username");
+usernameEl.textContent = username;
 
-let userScore = sessionStorage.setItem('userScore', scoresEl)
-
+let userShip = sessionStorage.getItem("userShip");
+let shipImage = userShip;
+let userScore = sessionStorage.getItem("scoreEl");
+console.log(userScore);
 
 // -------======= THIS CODE DEFINES THE CLASS PLAYER THAT DESCRIBES A PLAYER OBJECT WITH POSITION (X AND Y COORDINATES), SIZE (RADIUS), COLOR. -------======= \\
 class Player {
@@ -76,12 +78,12 @@ class Player {
     image.src = this.shipImage;
     image.onload = () => {
       // gets the dimension of the image of the ship
-      let shipWidth = image.width
-      let shipHeight = image.height
+      let shipWidth = image.width;
+      let shipHeight = image.height;
       // offsets the centering by subtracting half of the width and height from the postion
       // TRUE CENTER
-      let shipPositionX = this.x - (shipWidth / 2)
-      let shipPositionY = this.y - (shipHeight / 2)
+      let shipPositionX = this.x - shipWidth / 2;
+      let shipPositionY = this.y - shipHeight / 2;
       c.beginPath();
       c.drawImage(image, shipPositionX, shipPositionY);
       c.drawImage(image, shipPositionX, shipPositionY);
@@ -875,47 +877,64 @@ startGameBtn.addEventListener("click", () => {
   startGame();
 });
 
+document.getElementById("scores").addEventListener("click", () => {
+  setScore();
+  window.location.href = "./score-page/score.html"; // Change this URL to the actual game page URL/
+});
 
+// function setScore() {
+//   let initials = inputEl.value.toUpperCase();
+//   console.log(initials);
 
-
-function setScore() {
-  let initials = inputEl.value.toUpperCase();
-  console.log(initials);
-
-  // Set default value "Unknown" if initials are not entered by the user
-  if (initials === '') {
-      initials = "Unknown";
-  }
+//   // Set default value "Unknown" if initials are not entered by the user
+//   if (initials === '') {
+//       initials = "Unknown";
+//   }
 
   let newScore = {
       userShip: initials,
-      userScore: score
+      score: score
   };
 
-  let scoreHistory = JSON.parse(localStorage.getItem('scoreHistory')) || [];
-  scoreHistory.push(newScore);
+//   let scoreHistory = JSON.parse(localStorage.getItem('scoreHistory')) || [];
+//   scoreHistory.push(newScore);
 
-  // Store the updated score history in local storage
-  localStorage.setItem('scoreHistory', JSON.stringify(scoreHistory));
+//   // Store the updated score history in local storage
+//   localStorage.setItem('scoreHistory', JSON.stringify(scoreHistory));
 
   // Retrieve the user's selected ship from session storage
   let userShip = sessionStorage.getItem('userShip');
   console.log('userShip', userShip);
 
-  let userScore = sessionStorage.getItem('userScore');
-  console.log('userScore', userScore);
-
   // Display the user's ship and score in a table on the scores page
-  const table = document.querySelector('#scoreboard');
+  const table = document.querySelector('#scoresTable');
 
-  // Create a new row for the user's data
-  let row = table.insertRow();
-  let cell1 = row.insertCell(0);
-  let cell2 = row.insertCell(1);
+//   // Create a new row for the user's data
+//   let row = table.insertRow();
+//   let cell1 = row.insertCell(0);
+//   let cell2 = row.insertCell(1);
 
   cell1.textContent = userShip;
-  cell2.textContent = userScore;
+  cell2.textContent = score;
 }
 
+// global empty variable
+let scoreHistory = [];
 
+// checks local storage for saved scores
+let savedScores = localStorage.getItem("scoreHistory");
+// if there is saved scores then parse the data and add it to the empty variable
+if (savedScores !== null) {
+  let parsedSavedScores = JSON.parse(savedScores);
+  scoreHistory = parsedSavedScores;
+}
 
+// stores the current user's name and score as an array
+// adds that array to the scoreHistory array
+// stringifies the array and adds to localStorage
+function setScore(param) {
+  let currentScore = [username, score];
+  scoreHistory.push(currentScore);
+  let stringifiedScoreHistory = JSON.stringify(scoreHistory);
+  localStorage.setItem("scoreHistory", stringifiedScoreHistory);
+}
