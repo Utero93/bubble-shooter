@@ -5,16 +5,17 @@ const deltaShip = document.getElementById("delta");
 const echoShip = document.getElementById("echo");
 const gammaShip = document.getElementById("gamma");
 
-
 const alphaShipBtn = document.getElementById("alpha-ship");
 const betaShipBtn = document.getElementById("beta-ship");
 const charlieShipBtn = document.getElementById("charlie-ship");
 const deltaShipBtn = document.getElementById("delta-ship");
 const echoShipBtn = document.getElementById("echo-ship");
+const gammaShipBtn = document.getElementById("gamma-ship");
 
-const username = document.getElementById("input");
+
 
 let userShip
+
 
 
 // gets the source of the imaage, use url instead? or will run into issues with file locations
@@ -63,4 +64,10 @@ echoShipBtn.addEventListener("click", function () {
   userShip = echoShip.getAttribute("src").slice(1);
   sessionStorage.setItem("userShip", userShip);
   usernameModal.style.display = "block";
+});
+
+gammaShipBtn.addEventListener("click", function () {
+  userShip = gammaShip.getAttribute("src").slice(1)
+  sessionStorage.setItem('userShip', userShip)
+  window.location.href = '../index.html'
 });
