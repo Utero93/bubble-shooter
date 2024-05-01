@@ -4,7 +4,7 @@ const charlieShip = document.getElementById("charlie");
 const deltaShip = document.getElementById("delta");
 const echoShip = document.getElementById("echo");
 const gammaShip = document.getElementById("gamma");
-const gammaShip = document.getElementById("gamma");
+
 
 const alphaShipBtn = document.getElementById("alpha-ship");
 const betaShipBtn = document.getElementById("beta-ship");

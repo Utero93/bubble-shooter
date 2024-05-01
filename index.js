@@ -21,7 +21,6 @@ let endEl = document.getElementById("end");
 let submitEl = document.getElementById("submit");
 let inputEl = document.getElementById("input");
 // let finalScoreEl = document.getElementById("finalscore");
-// let finalScoreEl = document.getElementById("finalscore");
 
 // Variables for the scoreboard section
 let scoreSectionEl = document.getElementById("score");
@@ -83,7 +82,6 @@ class Player {
       let shipPositionY = this.y - shipHeight / 2;
       c.beginPath();
       c.drawImage(image, shipPositionX, shipPositionY);
-      c.drawImage(image, shipPositionX, shipPositionY);
     };
   }
 }
@@ -142,14 +140,7 @@ class Projectile {
     // // -------======= THIS CODE CHECKS IF THE ELEMENT IS REACHING THE SIDES OF THE CANVAS WIDTH. IF IT IS, IT REVERSES THE HORIZONTAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES. -------======= \\
     // if (this.x - this.radius <= 0 || this.x + this.radius >= canvas.width) {
     //   this.velocity.x = -this.velocity.x; // IF IT IS, IT REVERSES THE HORIZONTAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES.
-    // // -------======= THIS CODE CHECKS IF THE ELEMENT IS REACHING THE SIDES OF THE CANVAS WIDTH. IF IT IS, IT REVERSES THE HORIZONTAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES. -------======= \\
-    // if (this.x - this.radius <= 0 || this.x + this.radius >= canvas.width) {
-    //   this.velocity.x = -this.velocity.x; // IF IT IS, IT REVERSES THE HORIZONTAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES.
 
-    //   // -------=======  IT ALSO CHANGES THE COLOR AND SHAPE OF THE ELEMENT. -------======= \\
-    //   this.color = "blue";
-    //   this.shape = "one";
-    // }
     //   // -------=======  IT ALSO CHANGES THE COLOR AND SHAPE OF THE ELEMENT. -------======= \\
     //   this.color = "blue";
     //   this.shape = "one";
@@ -158,13 +149,7 @@ class Projectile {
     // -------======= THIS CODE CHECKS IF THE ELEMENT IS REACHING THE TOP OR BOTTOM OF THE CANVAS HEIGHT. -------======= \\
     // if (this.y - this.radius <= 0 || this.y + this.radius >= canvas.height) {
     //   this.velocity.y = -this.velocity.y; // IF IT IS, IT REVERSES THE VERTICAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES.
-    // if (this.y - this.radius <= 0 || this.y + this.radius >= canvas.height) {
-    //   this.velocity.y = -this.velocity.y; // IF IT IS, IT REVERSES THE VERTICAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES.
 
-    //   // -------=======  IT ALSO CHANGES THE COLOR AND SHAPE OF THE ELEMENT. -------======= \\
-    //   this.color = "blue";
-    //   this.shape = "one";
-    // }
     //   // -------=======  IT ALSO CHANGES THE COLOR AND SHAPE OF THE ELEMENT. -------======= \\
     //   this.color = "blue";
     //   this.shape = "one";
@@ -488,7 +473,6 @@ function init() {
   score = 0;
   // -------======= SETTING SCORE TO ZERO, AND UPDATING SCORE DISPLAY ELEMENTS. -------======= \\
   scoresEl.innerHTML = score;
-  scoresEl.innerHTML = score;
   bigScoreEl.innerHTML = score;
 }
 
@@ -608,8 +592,6 @@ function animate() {
         if (dist - enemy.radius - projectile.radius < 1) {
           // const explosionSound = new Audio("./assets/burst.wav");
           // explosionSound.play();
-          // const explosionSound = new Audio("./assets/burst.wav");
-          // explosionSound.play();
 
           // // -------======= CREATES MULTIPLE PARTICLES AT THE PROJECTILE'S POSITION WITH RANDOM SPEEDS AND COLORS, TO SIMULATE AN EXPLOSION EFFECT. -------======= \\
           // for (let i = 0; i < enemy.radius * 2; i++) {
@@ -619,23 +601,7 @@ function animate() {
           //       projectile.y,
           //       Math.random() * 2,
           //       enemy.color,
-          // // -------======= CREATES MULTIPLE PARTICLES AT THE PROJECTILE'S POSITION WITH RANDOM SPEEDS AND COLORS, TO SIMULATE AN EXPLOSION EFFECT. -------======= \\
-          // for (let i = 0; i < enemy.radius * 2; i++) {
-          //   particles.push(
-          //     new Particle(
-          //       projectile.x,
-          //       projectile.y,
-          //       Math.random() * 2,
-          //       enemy.color,
 
-          //       // -------======= GENERATES RANDOM X AND Y VALUES FOR THE PARTICLE'S MOVEMENT TO CREATE A RANDOMIZED DIRECTION FOR EACH PARTICLE. -------======= \\
-          //       {
-          //         x: (Math.random() - 0.5) * (Math.random() * 8),
-          //         y: (Math.random() - 0.5) * (Math.random() * 8),
-          //       }
-          //     )
-          //   );
-          // }
           //       // -------======= GENERATES RANDOM X AND Y VALUES FOR THE PARTICLE'S MOVEMENT TO CREATE A RANDOMIZED DIRECTION FOR EACH PARTICLE. -------======= \\
           //       {
           //         x: (Math.random() - 0.5) * (Math.random() * 8),
@@ -880,54 +846,38 @@ document.getElementById("scores").addEventListener("click", () => {
 // function setScore() {
 //   let initials = inputEl.value.toUpperCase();
 //   console.log(initials);
-document.getElementById("scores").addEventListener("click", () => {
-  setScore();
-  window.location.href = "./score-page/score.html"; // Change this URL to the actual game page URL/
-});
-
-// function setScore() {
-//   let initials = inputEl.value.toUpperCase();
-//   console.log(initials);
 
 //   // Set default value "Unknown" if initials are not entered by the user
 //   if (initials === '') {
 //       initials = "Unknown";
 //   }
-//   // Set default value "Unknown" if initials are not entered by the user
-//   if (initials === '') {
-//       initials = "Unknown";
-//   }
 
-  let newScore = {
-      userShip: initials,
-      score: score
-  };
+//   let newScore = {
+//       userShip: initials,
+//       score: score
+//   };
 
-//   let scoreHistory = JSON.parse(localStorage.getItem('scoreHistory')) || [];
-//   scoreHistory.push(newScore);
 //   let scoreHistory = JSON.parse(localStorage.getItem('scoreHistory')) || [];
 //   scoreHistory.push(newScore);
 
 //   // Store the updated score history in local storage
 //   localStorage.setItem('scoreHistory', JSON.stringify(scoreHistory));
-//   // Store the updated score history in local storage
-//   localStorage.setItem('scoreHistory', JSON.stringify(scoreHistory));
 
-  // Retrieve the user's selected ship from session storage
-  let userShip = sessionStorage.getItem('userShip');
-  console.log('userShip', userShip);
+//   // Retrieve the user's selected ship from session storage
+//   let userShip = sessionStorage.getItem('userShip');
+//   console.log('userShip', userShip);
 
-  // Display the user's ship and score in a table on the scores page
-  const table = document.querySelector('#scoresTable');
+//   // Display the user's ship and score in a table on the scores page
+//   const table = document.querySelector('#scoresTable');
 
 //   // Create a new row for the user's data
 //   let row = table.insertRow();
 //   let cell1 = row.insertCell(0);
 //   let cell2 = row.insertCell(1);
 
-  cell1.textContent = userShip;
-  cell2.textContent = score;
-}
+//   cell1.textContent = userShip;
+//   cell2.textContent = score;
+// }
 
 // global empty variable
 let scoreHistory = [];
