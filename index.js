@@ -472,7 +472,7 @@ function init() {
   particles = [];
   score = 0;
   // -------======= SETTING SCORE TO ZERO, AND UPDATING SCORE DISPLAY ELEMENTS. -------======= \\
-  scoresEl.innerHTML = score;
+  scoreEl.innerHTML = score;
   bigScoreEl.innerHTML = score;
 }
 
@@ -540,7 +540,7 @@ function animate() {
   if (paused === false) {
     // -------======= CONTINUE ANIMATING BY DRAWING A SEMI-TRANSPARENT COLOR BACKGROUND -------======= \\
     animationId = requestAnimationFrame(animate);
-    c.fillStyle = "rgba(0, 0, 0, 0)";
+    c.fillStyle = "rgba(1.5, 1.5, 1.5, 0.5)";
     c.fillRect(0, 0, canvas.width, canvas.height);
 
     // -------======= DRAWING A PLAYER CHARACTER, AND UPDATING PARTICLES. -------======= \\
@@ -613,7 +613,7 @@ function animate() {
           // -------======= IF THE ENEMY'S RADIUS MINUS 10 IS GREATER THAN 5, INCREASE THE SCORE BY 100 AND UPDATE THE SCORE DISPLAY ON THE SCREEN. -------======= \\
           if (enemy.radius - 10 > 5) {
             score += 100;
-            scoresEl.innerHTML = score;
+            scoreEl.innerHTML = score;
             // -------======= THIS CODE ANIMATES THE ENEMY OBJECT BY CHANGING ITS RADIUS TO A VALUE 10 LESS THAN THE CURRENT RADIUS. -------======= \\
             gsap.to(enemy, {
               radius: enemy.radius - 10,
@@ -627,7 +627,7 @@ function animate() {
             // -------======= THIS INCREASES THE SCORE BY 250 POINTS, REMOVES BOTH THE ENEMY AND PROJECTILE FROM THEIR ARRAYS AFTER A DELAY OF 0 MILLISECONDS. -------======= \\
           } else {
             score += 250;
-            scoresEl.innerHTML = score;
+            scoreEl.innerHTML = score;
             setTimeout(() => {
               enemies.splice(index, 1);
               projectiles.splice(projectileIndex, 1);

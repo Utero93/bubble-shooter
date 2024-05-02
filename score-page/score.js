@@ -26,7 +26,9 @@ document.getElementById("retry").addEventListener("click", () => {
 });
 
 clearEl.addEventListener("click", function () {
+  // clears local storage and refreshses the page
   localStorage.clear();
+  location.reload();
 });
 // This will automatically display the saved list of users high score
 // scoresEl.addEventListener("click", function(){
