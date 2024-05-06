@@ -1,3 +1,5 @@
+// created at 5/6 3:14PM
+
 // -------======= THIS CODE SELECTS AN HTML CANVAS ELEMENT ON THE WEBPAGE  -------======= \\
 
 const canvas = document.querySelector("canvas");
@@ -37,39 +39,37 @@ let shipImage = userShip;
 let userScore = sessionStorage.getItem("scoreEl");
 console.log(userScore);
 
-// let backgroundImage = "./assets/Spac-bg.png";
-
-// class Background {
-//   constructor(image) {
-//     this.background = image;
-//   }
-//   draw() {
-//     // draws the background first and then repeats the it until window is filled
-//     const background = new Image();
-//     background.src = this.background;
-//     background.onload = function () {
-//       const ptrn = c.createPattern(background, "repeat");
-//       c.fillStyle = ptrn;
-//       c.fillRect(0, 0, canvas.width, canvas.height);
-//     };
-//   }
-// }
-
-// new Background(backgroundImage);
-
 // -------======= THIS CODE DEFINES THE CLASS PLAYER THAT DESCRIBES A PLAYER OBJECT WITH POSITION (X AND Y COORDINATES), SIZE (RADIUS), COLOR. -------======= \\
 class Player {
-  constructor(shipImage, x, y, radius, color, angle) {
+  constructor(shipImage, x, y, radius, color) {
     this.x = x;
     this.y = y;
     this.radius = radius;
     this.color = color;
     this.shipImage = shipImage;
-    this.angle = angle;
   }
+
+  // -------======= A METHOD CALLED DRAW() THAT DRAWS A CIRCULAR SHAPE REPRESENTING THE PLAYER ON A CANVAS CONTEXT. -------======= \\
+  // draw() {
+  //   c.beginPath();
+  //   c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+  //   c.shadowColor = this.color;
+  //   c.shadowBlur = 9;
+  //   c.fillStyle = this.color;
+  //   c.fill();
+  // }
 
   // add center positioning
   draw() {
+    // draws the background first and then repeats the it until window is filled
+    const background = new Image();
+    background.src = "./assets/Spac-bg.png";
+    background.onload = function () {
+      const ptrn = c.createPattern(background, "repeat");
+      c.fillStyle = ptrn;
+      c.fillRect(0, 0, canvas.width, canvas.height);
+    };
+
     // draws the image for the player's ship
     // MUST GO AFTER THE BACKGROUND OR THE BACKGROUND WILL COVER THE SHIP
     const image = new Image();
@@ -83,12 +83,17 @@ class Player {
       let shipPositionX = this.x - shipWidth / 2;
       let shipPositionY = this.y - shipHeight / 2;
       c.beginPath();
-      c.save();
-      c.rotate();
       c.drawImage(image, shipPositionX, shipPositionY);
     };
   }
 }
+
+// -------======= THIS FUNCTION MOVES THE PLAYER ELEMENT ON THE WEB PAGE TO A SPECIFIC POSITION SET BY THE X AND Y COORDINATES.  -------======= \\
+// function drawPlayer(x, y) {
+//   const playerElement = document.getElementById("player");
+//   playerElement.style.left = x + "0px"; // Set the x position
+//   playerElement.style.top = y + "0px"; // Set the y position
+// }
 
 // -------======= THIS CLASS DEFINES A PROJECTILE WITH SPECIFIED POSITION, SIZE, COLOR, VELOCITY, AND SHAPE. -------======= \\
 class Projectile {
@@ -732,8 +737,6 @@ canvas.addEventListener("mousedown", (event) => {
       event.clientX - canvas.width / 2
     );
 
-    player = new Player(shipImage, x, y, 10, white, angle);
-
     // -------======= AND THE MOUSE POSITION (event.clientX, event.clientY) -------======= \\
     const velocity = {
       x: Math.cos(angle) * 4,
@@ -841,6 +844,42 @@ document.getElementById("scores").addEventListener("click", () => {
   setScore();
   window.location.href = "./score-page/score.html"; // Change this URL to the actual game page URL/
 });
+
+// function setScore() {
+//   let initials = inputEl.value.toUpperCase();
+//   console.log(initials);
+
+//   // Set default value "Unknown" if initials are not entered by the user
+//   if (initials === '') {
+//       initials = "Unknown";
+//   }
+
+//   let newScore = {
+//       userShip: initials,
+//       score: score
+//   };
+
+//   let scoreHistory = JSON.parse(localStorage.getItem('scoreHistory')) || [];
+//   scoreHistory.push(newScore);
+
+//   // Store the updated score history in local storage
+//   localStorage.setItem('scoreHistory', JSON.stringify(scoreHistory));
+
+//   // Retrieve the user's selected ship from session storage
+//   let userShip = sessionStorage.getItem('userShip');
+//   console.log('userShip', userShip);
+
+//   // Display the user's ship and score in a table on the scores page
+//   const table = document.querySelector('#scoresTable');
+
+//   // Create a new row for the user's data
+//   let row = table.insertRow();
+//   let cell1 = row.insertCell(0);
+//   let cell2 = row.insertCell(1);
+
+//   cell1.textContent = userShip;
+//   cell2.textContent = score;
+// }
 
 // global empty variable
 let scoreHistory = [];

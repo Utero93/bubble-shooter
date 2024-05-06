@@ -1,0 +1,13 @@
+bubble shooter notes
+
+randomSize variable? Would you not want a uniform size for the particle effects
+
+bounce back feature? Disabled currently but not helping with lag
+enemy death animation? Particles have been disabled but still lagging
+
+calculate the trajectory of the shots, map that angle to the ship so it rotates and tracks when the ship shoots
+(https://www.geeksforgeeks.org/how-to-get-the-coordinates-of-a-mouse-click-on-a-canvas-element/)
+(https://stackoverflow.com/questions/40120470/javascript-making-image-rotate-to-always-look-at-mouse-cursor)
+
+particles dissapear on contact with target and when it leaves the boundary? Possible reason for the lag, too many particles
+

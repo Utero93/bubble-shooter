@@ -30,6 +30,7 @@ clearEl.addEventListener("click", function () {
   localStorage.clear();
   location.reload();
 });
+
 // This will automatically display the saved list of users high score
 // scoresEl.addEventListener("click", function(){
 
