@@ -47,16 +47,6 @@ class Player {
     this.shipImage = shipImage;
   }
 
-  // -------======= A METHOD CALLED DRAW() THAT DRAWS A CIRCULAR SHAPE REPRESENTING THE PLAYER ON A CANVAS CONTEXT. -------======= \\
-  // draw() {
-  //   c.beginPath();
-  //   c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-  //   c.shadowColor = this.color;
-  //   c.shadowBlur = 9;
-  //   c.fillStyle = this.color;
-  //   c.fill();
-  // }
-
   // add center positioning
   draw() {
     // draws the background first and then repeats the it until window is filled
@@ -85,13 +75,6 @@ class Player {
     };
   }
 }
-
-// -------======= THIS FUNCTION MOVES THE PLAYER ELEMENT ON THE WEB PAGE TO A SPECIFIC POSITION SET BY THE X AND Y COORDINATES.  -------======= \\
-// function drawPlayer(x, y) {
-//   const playerElement = document.getElementById("player");
-//   playerElement.style.left = x + "0px"; // Set the x position
-//   playerElement.style.top = y + "0px"; // Set the y position
-// }
 
 // -------======= THIS CLASS DEFINES A PROJECTILE WITH SPECIFIED POSITION, SIZE, COLOR, VELOCITY, AND SHAPE. -------======= \\
 class Projectile {
@@ -137,23 +120,6 @@ class Projectile {
       }
     });
 
-    // // -------======= THIS CODE CHECKS IF THE ELEMENT IS REACHING THE SIDES OF THE CANVAS WIDTH. IF IT IS, IT REVERSES THE HORIZONTAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES. -------======= \\
-    // if (this.x - this.radius <= 0 || this.x + this.radius >= canvas.width) {
-    //   this.velocity.x = -this.velocity.x; // IF IT IS, IT REVERSES THE HORIZONTAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES.
-
-    //   // -------=======  IT ALSO CHANGES THE COLOR AND SHAPE OF THE ELEMENT. -------======= \\
-    //   this.color = "blue";
-    //   this.shape = "one";
-    // }
-
-    // -------======= THIS CODE CHECKS IF THE ELEMENT IS REACHING THE TOP OR BOTTOM OF THE CANVAS HEIGHT. -------======= \\
-    // if (this.y - this.radius <= 0 || this.y + this.radius >= canvas.height) {
-    //   this.velocity.y = -this.velocity.y; // IF IT IS, IT REVERSES THE VERTICAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES.
-
-    //   // -------=======  IT ALSO CHANGES THE COLOR AND SHAPE OF THE ELEMENT. -------======= \\
-    //   this.color = "blue";
-    //   this.shape = "one";
-    // }
   }
 }
 
@@ -838,61 +804,49 @@ startGameBtn.addEventListener("click", () => {
   startGame();
 });
 
+/*
+1. WHEN THE ELEMENT WITH THE ID "scores" IS CLICKED BY THE USER, DO THE FOLLOWING STEPS:
+2. CALL THE FUNCTION "setScore()". THIS FUNCTION IS LIKELY TO UPDATE OR SET THE SCORE IN THE CURRENT SESSION.
+3. REDIRECT THE USER TO THE "./score-page/score.html" PAGE USING window.location.href.
+4. IN SUMMARY, WHEN THE "scores" ELEMENT IS CLICKED, THE FUNCTION "setScore()" IS CALLED TO UPDATE SCORES,
+   AND THEN THE USER IS REDIRECTED TO ANOTHER PAGE FOR DISPLAYING SCORES.
+*/
+
 document.getElementById("scores").addEventListener("click", () => {
   setScore();
-  window.location.href = "./score-page/score.html"; // Change this URL to the actual game page URL/
+  window.location.href = "./score-page/score.html";
 });
 
-// function setScore() {
-//   let initials = inputEl.value.toUpperCase();
-//   console.log(initials);
-
-//   // Set default value "Unknown" if initials are not entered by the user
-//   if (initials === '') {
-//       initials = "Unknown";
-//   }
-
-//   let newScore = {
-//       userShip: initials,
-//       score: score
-//   };
-
-//   let scoreHistory = JSON.parse(localStorage.getItem('scoreHistory')) || [];
-//   scoreHistory.push(newScore);
-
-//   // Store the updated score history in local storage
-//   localStorage.setItem('scoreHistory', JSON.stringify(scoreHistory));
-
-//   // Retrieve the user's selected ship from session storage
-//   let userShip = sessionStorage.getItem('userShip');
-//   console.log('userShip', userShip);
-
-//   // Display the user's ship and score in a table on the scores page
-//   const table = document.querySelector('#scoresTable');
-
-//   // Create a new row for the user's data
-//   let row = table.insertRow();
-//   let cell1 = row.insertCell(0);
-//   let cell2 = row.insertCell(1);
-
-//   cell1.textContent = userShip;
-//   cell2.textContent = score;
-// }
-
-// global empty variable
+/*
+1. DECLARE A NEW VARIABLE NAMED "SCOREHISTORY" TO STORE AN ARRAY OF SCORES.
+2. THIS ARRAY WILL BE USED TO KEEP TRACK OF PAST SCORES OR SCORE HISTORY.
+*/
 let scoreHistory = [];
 
-// checks local storage for saved scores
+/*
+1. RETRIEVE THE VALUE ASSOCIATED WITH THE "scoreHistory" KEY FROM THE BROWSER'S LOCAL STORAGE AND STORE IT IN A NEW VARIABLE NAMED "SAVEDSCORES".
+2. THIS VALUE REPRESENTS THE SCORE HISTORY PREVIOUSLY SAVED IN THE LOCAL STORAGE FOR FUTURE REFERENCE OR USE.
+*/
 let savedScores = localStorage.getItem("scoreHistory");
-// if there is saved scores then parse the data and add it to the empty variable
+
+
+/*
+1. CHECK IF THE VARIABLE "savedScores" IS NOT EQUAL TO NULL, MEANING THERE IS A VALUE STORED IN IT FROM LOCAL STORAGE.
+2. IF THE CONDITION IS MET, PARSE THE VALUE STORED IN "savedScores" AS A JSON OBJECT AND ASSIGN IT TO A NEW VARIABLE NAMED "parsedSavedScores".
+3. UPDATE THE "scoreHistory" VARIABLE WITH THE PARSED JSON OBJECT STORED IN "parsedSavedScores", WHICH REPRESENTS THE HISTORICAL SCORE DATA RETRIEVED FROM THE LOCAL STORAGE.
+*/
 if (savedScores !== null) {
   let parsedSavedScores = JSON.parse(savedScores);
   scoreHistory = parsedSavedScores;
 }
 
-// stores the current user's name and score as an array
-// adds that array to the scoreHistory array
-// stringifies the array and adds to localStorage
+/*
+1. CREATE A FUNCTION NAMED "setScore" THAT TAKES A PARAMETER CALLED "param".
+2. CREATE AN ARRAY CALLED "currentScore" THAT STORES THE USERNAME AND SCORE IN A NEW ARRAY.
+3. ADD THE "currentScore" ARRAY TO THE "scoreHistory" ARRAY USING THE "push" METHOD, TO KEEP TRACK OF HISTORICAL SCORE DATA.
+4. CONVERT THE UPDATED "scoreHistory" ARRAY TO A STRING USING "JSON.stringify" AND STORE IT IN A NEW VARIABLE NAMED "stringifiedScoreHistory".
+5. STORE THE STRINGIFIED SCORE HISTORY DATA IN THE BROWSER'S LOCAL STORAGE UNDER THE KEY "scoreHistory" USING "localStorage.setItem" TO SAVE THE DATA FOR LATER USE.
+*/
 function setScore(param) {
   let currentScore = [username, score];
   scoreHistory.push(currentScore);

@@ -26,80 +26,48 @@ document.getElementById("retry").addEventListener("click", () => {
 });
 
 clearEl.addEventListener("click", function () {
-  // clears local storage and refreshses the page
+
   localStorage.clear();
   location.reload();
 });
-// This will automatically display the saved list of users high score
-// scoresEl.addEventListener("click", function(){
 
-/* This function uses the .remove method for modalEl, startGameBtn, bigScoreEl, end(El) variables
-     storing the id="name value" for each section in the html file 
-     It also removes the contents startGamebtn and bigScoreEl within the container of the modalEl page
-    */
-
-// modalEl.remove();
-
-/* Line 67 is displaying the score section 
-       and all of its contents on the web page in the browser
-    */
-// scoreSectionEl.style.display = "inline-block";
-
-// getScores();
-// setScores();
-// });
-
-// Submits the users intials and scores
-// submitEl.addEventListener("click", function(){
-
-//     inputEl.remove();
-//     endEl.style.display = "block";
-
-// Sets the value for the text area in the section for inputting scores
-// setScore();
-
-// Gets the value from the text within the scores section
-// getScores();
-// });
-
-// // Allows the user to retry the quiz
-// retryEl.addEventListener("click", function(){
-
-// // reloads the location of the contents in the variable retryEl()
-//     location.reload();
-// });
-
-// clears the scoreboard with the users saved data from the local storage
-// clearEl.addEventListener("click", function(){
-
-// // sets the value to a string "score history" with the value of an empty array
-//     sessionStorage.setItem("scoreHistory", "[]");
-
-// // reloads the page with a cleared local storage
-//     location.reload();
-// });
-
-// saves the users current quiz score
-
+/*
+1. RETRIEVE THE CONTENTS OF THE "scoreHistory" KEY FROM LOCAL STORAGE AND STORE IT IN THE VARIABLE "scoreboard".
+2. PARSE THE "scoreboard" AS JSON AND STORE THE RESULTING ARRAY IN THE VARIABLE "scoreboardArray".
+3. DISPLAY THE CONTENTS OF "scoreboardArray" IN THE CONSOLE LOG.
+4. GET THE HTML ELEMENT WITH THE ID "scoretable" AND STORE IT IN THE VARIABLE "scoreTable" FOR FURTHER USE.
+*/
 let scoreboard = localStorage.getItem("scoreHistory");
 let scoreboardArray = JSON.parse(scoreboard);
 console.log(scoreboardArray);
 let scoreTable = document.getElementById("scoretable");
 
+/*
+1. FOR EACH ELEMENT IN THE "scoreboardArray" ARRAY FROM THE START (INDEX 0) TO THE END, DO THE FOLLOWING STEPS:
+2. CREATE A NEW HTML TABLE ROW ELEMENT USING document.createElement("tr") AND STORE IT IN THE VARIABLE "tableRow".
+3. ADD A CSS CLASS "tableRow" TO THE NEWLY CREATED ROW USING tableRow.classList.add("tableRow").
+4. APPEND THE ROW TO THE HTML ELEMENT WITH THE ID "scoretable" (STORED EARLIER) USING scoreTable.append(tableRow).
+5. FOR EACH COLUMN IN THE CURRENT ROW, FROM INDEX 0 TO 1, DO THE FOLLOWING STEPS:
+6. CREATE A NEW HTML TABLE DATA ELEMENT USING document.createElement("td") AND STORE IT IN THE VARIABLE "tableData".
+7. ADD A CSS CLASS "tableData" TO THE NEWLY CREATED DATA CELL USING tableData.classList.add("tableData").
+8. SET THE TEXT CONTENT OF THE DATA CELL TO THE VALUE IN THE "scoreboardArray" AT INDEX i, j USING tableData.textContent = scoreboardArray[i][j].
+9. APPEND THE DATA CELL TO THE CURRENT ROW USING tableRow.append(tableData).
+10. REPEAT STEPS 5-9 FOR EACH COLUMN IN THE CURRENT ROW UNTIL ALL ENTRIES IN THE "scoreboardArray" HAVE BEEN PROCESSED AND DISPLAYED IN THE HTML TABLE.
+*/
 for (let i = 0; i < scoreboardArray.length; i++) {
-  // create table rows
+
   let tableRow = document.createElement("tr");
-  // attr
+ 
   tableRow.classList.add("tableRow");
-  // append
+ 
   scoreTable.append(tableRow);
   for (let j = 0; j < 2; j++) {
-    // create table data
+
     let tableData = document.createElement("td");
-    // attr
+  
     tableData.classList.add("tableData");
     tableData.textContent = scoreboardArray[i][j];
-    // append
+    
     tableRow.append(tableData);
   }
 }
