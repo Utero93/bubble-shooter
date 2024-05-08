@@ -46,10 +46,16 @@ class Player {
     this.color = color;
     this.shipImage = shipImage;
   }
-
-  // add center positioning
+/*
+1. DEFINE A FUNCTION NAMED "draw" THAT WILL HANDLE DRAWING OPERATIONS.
+2. CREATE A NEW IMAGE OBJECT CALLED "background".
+3. SET THE SOURCE OF THE IMAGE TO THE BACKGROUND IMAGE FILE LOCATED AT "./assets/Spac-bg.png".
+4. DEFINE AN "onload" EVENT HANDLER FUNCTION THAT WILL EXECUTE WHEN THE BACKGROUND IMAGE FINISHES LOADING.
+5. INSIDE THE "onload" FUNCTION, CREATE A PATTERN ("ptrn") USING THE LOADED BACKGROUND IMAGE AND SET IT AS THE FILL STYLE OF THE CANVAS ("c").
+6. FILL THE ENTIRE CANVAS WITH THE PATTERN, REPEATING IT HORIZONTALLY AND VERTICALLY, TO CREATE A BACKGROUND EFFECT.
+*/
   draw() {
-    // draws the background first and then repeats the it until window is filled
+   
     const background = new Image();
     background.src = "./assets/Spac-bg.png";
     background.onload = function () {
@@ -58,16 +64,21 @@ class Player {
       c.fillRect(0, 0, canvas.width, canvas.height);
     };
 
-    // draws the image for the player's ship
-    // MUST GO AFTER THE BACKGROUND OR THE BACKGROUND WILL COVER THE SHIP
+/*
+1. CREATE A NEW IMAGE OBJECT AND ASSIGN IT TO A VARIABLE CALLED "image".
+2. SET THE SOURCE OF THE IMAGE OBJECT TO THE VALUE STORED IN "this.shipImage".
+3. DEFINE AN "onload" EVENT HANDLER USING AN ARROW FUNCTION THAT WILL EXECUTE WHEN THE IMAGE FINISHES LOADING.
+4. CALCULATE THE WIDTH AND HEIGHT OF THE SHIP IMAGE AND STORE THEM IN VARIABLES "shipWidth" AND "shipHeight" RESPECTIVELY.
+5. CALCULATE THE X AND Y COORDINATES OF THE SHIP POSITION BASED ON THE CENTER OF THE SHIP IMAGE AND THE OBJECT'S X AND Y COORDINATES.
+6. START A NEW DRAWING PATH ON THE CANVAS ("c") USING "beginPath()".
+7. DRAW THE LOADED IMAGE (SHIP) ON THE CANVAS AT THE CALCULATED POSITION (shipPositionX, shipPositionY) USING "drawImage()".
+*/
     const image = new Image();
     image.src = this.shipImage;
     image.onload = () => {
-      // gets the dimension of the image of the ship
+
       let shipWidth = image.width;
       let shipHeight = image.height;
-      // offsets the centering by subtracting half of the width and height from the postion
-      // TRUE CENTER
       let shipPositionX = this.x - shipWidth / 2;
       let shipPositionY = this.y - shipHeight / 2;
       c.beginPath();
@@ -86,37 +97,55 @@ class Projectile {
     this.velocity = velocity;
     this.shape = shape;
   }
-  // -------=======  THIS METHOD DRAWS A SHAPED BASED ON THE SPECIFIED SHAPE PROPERTY OF THE PROJECTILE. -------======= \\
+/*
+1. BEGIN A NEW DRAWING PATH ON THE CANVAS ("c") USING "beginPath()".
+2. CHECK IF THE "shape" PROPERTY OF THE OBJECT IS EQUAL TO "one".
+3. IF THE SHAPE IS "one", SET THE FONT SIZE OF THE TEXT TO 5 TIMES THE RADIUS OF THE OBJECT AND USE THE "Arial" FONT.
+4. SET THE FILL STYLE OF THE TEXT TO THE COLOR DEFINED IN THE OBJECT'S "color" PROPERTY.
+5. DRAW TEXT CONTAINING A "1" AT A SPECIFIC POSITION ON THE CANVAS. THE POSITION IS CALCULATED BASED ON THE OBJECT'S X AND Y COORDINATES AND RADIUS VALUE.
+*/
   draw() {
     c.beginPath();
 
-    // -------======= IF THE SHAPE IS "ONE", IT WILL DRAW THE NUMBER "1" AT THE SPECIFIED POSITION, SIZE, AND COLOR. -------======= \\
     if (this.shape === "one") {
       c.font = `${this.radius * 5}px Arial`;
       c.fillStyle = this.color;
       c.fillText("1", this.x - this.radius, this.y + this.radius);
 
-      // -------======= IF THE SHAPE IS "ZERO", IT WILL DRAW THE NUMBER "0" AT THE SPECIFIED POSITION, SIZE, AND COLOR. -------======= \\
+/*
+1. CHECK IF THE "shape" PROPERTY OF THE OBJECT IS EQUAL TO "zero".
+2. IF THE SHAPE IS "zero", SET THE FONT SIZE OF THE TEXT TO 5 TIMES THE RADIUS OF THE OBJECT AND USE THE "Arial" FONT.
+3. SET THE FILL STYLE OF THE TEXT TO THE COLOR DEFINED IN THE OBJECT'S "color" PROPERTY.
+4. DRAW TEXT CONTAINING A "0" AT A SPECIFIC POSITION ON THE CANVAS. THE POSITION IS CALCULATED BASED ON THE OBJECT'S X AND Y COORDINATES AND RADIUS VALUE.
+*/
     } else if (this.shape === "zero") {
       c.font = `${this.radius * 5}px Arial`;
       c.fillStyle = this.color;
       c.fillText("0", this.x - this.radius, this.y + this.radius);
     }
   }
-  // -------======= THIS METHOD UPDATES THE POSITION OF AN ELEMENT ON A SCREEN BY MOVING IT ACCORDING TO A SPECIFIED VELOCITY. -------======= \\
+/*
+1. CALL THE "update" METHOD WHICH UPDATES THE POSITION OF AN OBJECT ON THE CANVAS.
+2. DRAW THE OBJECT AT ITS CURRENT POSITION.
+3. MOVE THE OBJECT'S X AND Y POSITION BASED ON ITS VELOCITY.
+4. FOR EACH ENEMY IN THE "enemies" ARRAY:
+   - CALCULATE THE DISTANCE BETWEEN THE OBJECT AND THE ENEMY USING THE EUCLIDEAN DISTANCE FORMULA.
+   - CHECK IF THE DISTANCE BETWEEN THE TWO CIRCLES IS LESS THAN 1 UNIT AWAY FROM COLLIDING (RADIUS TO RADIUS DISTANCE).
+   - IF THE DISTANCE IS VERY CLOSE TO COLLIDING:
+    - CHANGE THE OBJECT'S COLOR TO "red".
+    - SET THE SHAPE OF THE OBJECT TO "one".
+*/
   update() {
     this.draw();
     this.x += this.velocity.x;
     this.y += this.velocity.y;
 
-    // -------======= THIS CODE CALCULATES THE DISTANCE BETWEEN THE CURRENT ELEMENT AND EACH ENEMY IN AN ARRAY OF ENEMIES. -------======= \\
     enemies.forEach((enemy) => {
       const distance = Math.hypot(this.x - enemy.x, this.y - enemy.y);
 
-      // -------======= THIS CODE CHECKS IF THE DISTANCE BETWEEN THE CURRENT ELEMENT AND AN ENEMY IN AN ARRAY OF ENEMIES IS LESS THAN THE SUM OF THEIR RADII. -------======= \\
       if (distance - this.radius - enemy.radius < 1) {
-        this.color = "red"; // AND COLOR OF THE ELEMENT.
-        this.shape = "one"; // IF THE CONDITION IS MET, IT INDICATES A COLLISION HAS OCCURRED AND CHANGES THE SHAPE
+        this.color = "red";
+        this.shape = "one"; 
       }
     });
 
