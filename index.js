@@ -129,25 +129,72 @@ class Projectile {
       }
     });
 
+    powerups.forEach((powerup, index) => {
+      const distance = Math.hypot(this.x - powerup.x, this.y - powerup.y);
+
+      if (distance - this.radius - powerup.radius < 1) {
+        this.color = "green";
+        this.shape = "one";
+      }
+      projectiles.forEach((projectile, projectileIndex) => {
+        const dist = Math.hypot(
+          projectile.x - powerup.x,
+          projectile.y - powerup.y
+        );
+
+        if (dist - powerup.radius - projectile.radius < 1) {
+          setTimeout(() => {
+            projectiles.splice(projectileIndex, 1);
+          }, 0);
+          let powerUpTime = setInterval(function (param) {
+            if (
+              this.x - this.radius <= 0 ||
+              this.x + this.radius >= canvas.width
+            ) {
+              this.velocity.x = -this.velocity.x; // IF IT IS, IT REVERSES THE HORIZONTAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES.
+
+              // -------=======  IT ALSO CHANGES THE COLOR AND SHAPE OF THE ELEMENT. -------======= \\
+              this.color = "blue";
+              this.shape = "one";
+            }
+            // -------======= THIS CODE CHECKS IF THE ELEMENT IS REACHING THE TOP OR BOTTOM OF THE CANVAS HEIGHT. -------======= \\
+            if (
+              this.y - this.radius <= 0 ||
+              this.y + this.radius >= canvas.height
+            ) {
+              this.velocity.y = -this.velocity.y; // IF IT IS, IT REVERSES THE VERTICAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES.
+
+              // -------=======  IT ALSO CHANGES THE COLOR AND SHAPE OF THE ELEMENT. -------======= \\
+              this.color = "blue";
+              this.shape = "one";
+            }
+          }, 10000);
+          setTimeout(function (param) {
+            clearInterval(powerUpTime);
+          }, 10000);
+        }
+      });
+    });
+
     // ------------------- USE FOR A POWER UP ------------------------ //
 
-    // // -------======= THIS CODE CHECKS IF THE ELEMENT IS REACHING THE SIDES OF THE CANVAS WIDTH. IF IT IS, IT REVERSES THE HORIZONTAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES. -------======= \\
-    // if (this.x - this.radius <= 0 || this.x + this.radius >= canvas.width) {
-    //   this.velocity.x = -this.velocity.x; // IF IT IS, IT REVERSES THE HORIZONTAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES.
+    // -------======= THIS CODE CHECKS IF THE ELEMENT IS REACHING THE SIDES OF THE CANVAS WIDTH. IF IT IS, IT REVERSES THE HORIZONTAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES. -------======= \\
+    if (this.x - this.radius <= 0 || this.x + this.radius >= canvas.width) {
+      this.velocity.x = -this.velocity.x; // IF IT IS, IT REVERSES THE HORIZONTAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES.
 
-    //   // -------=======  IT ALSO CHANGES THE COLOR AND SHAPE OF THE ELEMENT. -------======= \\
-    //   this.color = "blue";
-    //   this.shape = "one";
-    // }
+      // -------=======  IT ALSO CHANGES THE COLOR AND SHAPE OF THE ELEMENT. -------======= \\
+      this.color = "blue";
+      this.shape = "one";
+    }
 
     // -------======= THIS CODE CHECKS IF THE ELEMENT IS REACHING THE TOP OR BOTTOM OF THE CANVAS HEIGHT. -------======= \\
-    // if (this.y - this.radius <= 0 || this.y + this.radius >= canvas.height) {
-    //   this.velocity.y = -this.velocity.y; // IF IT IS, IT REVERSES THE VERTICAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES.
+    if (this.y - this.radius <= 0 || this.y + this.radius >= canvas.height) {
+      this.velocity.y = -this.velocity.y; // IF IT IS, IT REVERSES THE VERTICAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES.
 
-    //   // -------=======  IT ALSO CHANGES THE COLOR AND SHAPE OF THE ELEMENT. -------======= \\
-    //   this.color = "blue";
-    //   this.shape = "one";
-    // }
+      // -------=======  IT ALSO CHANGES THE COLOR AND SHAPE OF THE ELEMENT. -------======= \\
+      this.color = "blue";
+      this.shape = "one";
+    }
   }
 }
 
@@ -509,7 +556,7 @@ function init() {
 function spawnPowerUps() {
   if (paused === false) {
     setInterval(() => {
-      const radius = 10;
+      const radius = Math.random() * (60 - 4) + 4;
 
       // -------======= DECLARES TWO VARIABLES, X AND Y, WITHOUT ASSIGNING A VALUE TO THEM. -------======= \\
       let x;
@@ -524,11 +571,12 @@ function spawnPowerUps() {
         y = Math.random() < 0.5 ? 0 - radius : canvas.height + radius;
       }
 
-      const color = "green";
+      // -------======= GENERATES A RANDOM HSL COLOR. -------======= \\
+      const color = `hsl(${Math.random() * 360}, 50%, 50%)`;
 
+      // -------======= SELECTS A RANDOM SHAPE FROM A LIST OF PREDEFINED SHAPES. -------======= \\
       const shapes = ["circle"];
-
-      const selectedShape = shapes[Math.floor(Math.random() * shapes.length)];
+      const selectedShape = "circle";
       // -------=======  CALCULATES THE ANGLE BETWEEN THE CENTER OF THE CANVAS AND A GIVEN POINT, AND THEN CALCULATES THE X AND Y COMPONENTS OF THE VELOCITY BASED ON THAT ANGLE. -------======= \\
       const angle = Math.atan2(canvas.height / 2 - y, canvas.width / 2 - x);
       const velocity = {
@@ -537,7 +585,7 @@ function spawnPowerUps() {
       };
 
       // -------=======  CREATES NEW ENEMIES WITH SPECIFIED PARAMETERS AND ADDS THEM TO THE "enemies" ARRAY AT A SET INTERVAL OF 2600 MILLISECONDS. -------======= \\
-      powerups.push(new Enemy(x, y, radius, color, velocity, selectedShape));
+      powerups.push(new PowerUp(x, y, radius, color, velocity, selectedShape));
     }, 2800);
   } else if (paused) {
     console.log("Game Is Paused");
@@ -704,7 +752,6 @@ function animate() {
         }
       });
     });
-
     // -------======= THIS CODE CHECKS IF THE GAME IS PAUSED. IF THE CONDITION IS TRUE, IT LOGS "GAME IS PAUSED" AND EXITS THE FUNCTION. -------======= \\
   } else if (paused) {
     console.log("Game Is Paused");
@@ -866,6 +913,7 @@ function togglePause() {
     pauseGameDiv.style.display = "none";
     animate();
     spawnEnemies();
+    spawnPowerUps();
   }
 }
 
@@ -892,7 +940,10 @@ function startGame() {
     animate();
 
     // -------======= SPAWNS ENEMIES -------======= \\
-    spawnEnemies();
+    // spawnEnemies();
+
+    // ----------- SPAWNS POWERUPS ------------ //
+    spawnPowerUps();
 
     // -------======= HIDES A MODAL ELEMENT. IF THE GAME ISN'T PAUSED, -------======= \\
     modalEl.style.display = "none";
