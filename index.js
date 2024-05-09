@@ -162,7 +162,27 @@ class PowerUp {
   }
 
   draw() {
+    c.beginPath();
 
+    if (this.shape === "circle") {
+      c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+    }
+
+    c.closePath();
+
+    c.fillStyle = this.color;
+    c.fill();
+    c.closePath();
+
+    c.shadowColor = "white";
+    c.shadowBlur = 8;
+    c.fillStyle = this.color;
+    c.fill();
+  }
+  update() {
+    this.draw();
+    this.x += this.velocity.x;
+    this.y += this.velocity.y;
   }
 }
 // -------======= THIS CgODE DEFINES A BLUEPRINT FOR CREATING ENEMY OBJECTS WITH SPECIFIED POSITION, SIZE, COLOR, VELOCITY, AND SHAPE.   -------======= \\
@@ -471,6 +491,7 @@ let player = new Player(shipImage, x, y, 10, "white");
 let projectiles = [];
 let enemies = [];
 let particles = [];
+let powerups = [];
 
 // -------======= INITIALIZING A PLAYER, EMPTY LISTS FOR PROJECTILES, ENEMIES, AND PARTICLES. -------======= \\
 function init() {
@@ -478,10 +499,50 @@ function init() {
   projectiles = [];
   enemies = [];
   particles = [];
+  powerups = [];
   score = 0;
   // -------======= SETTING SCORE TO ZERO, AND UPDATING SCORE DISPLAY ELEMENTS. -------======= \\
   // scoreEl.innerHTML = score;
   bigScoreEl.innerHTML = score;
+}
+
+function spawnPowerUps() {
+  if (paused === false) {
+    setInterval(() => {
+      const radius = 10;
+
+      // -------======= DECLARES TWO VARIABLES, X AND Y, WITHOUT ASSIGNING A VALUE TO THEM. -------======= \\
+      let x;
+      let y;
+
+      // -------======= GENERATES RANDOM COORDINATES WITHIN A CANVAS AREA, EITHER ALONG THE EDGES OR OUTSIDE THE CANVAS, BASED ON A RANDOM NUMBER. -------======= \\
+      if (Math.random() < 0.5) {
+        x = Math.random() < 0.5 ? 0 - radius : canvas.width + radius;
+        y = Math.random() * canvas.height;
+      } else {
+        x = Math.random() * canvas.width;
+        y = Math.random() < 0.5 ? 0 - radius : canvas.height + radius;
+      }
+
+      const color = "green";
+
+      const shapes = ["circle"];
+
+      const selectedShape = shapes[Math.floor(Math.random() * shapes.length)];
+      // -------=======  CALCULATES THE ANGLE BETWEEN THE CENTER OF THE CANVAS AND A GIVEN POINT, AND THEN CALCULATES THE X AND Y COMPONENTS OF THE VELOCITY BASED ON THAT ANGLE. -------======= \\
+      const angle = Math.atan2(canvas.height / 2 - y, canvas.width / 2 - x);
+      const velocity = {
+        x: Math.cos(angle),
+        y: Math.sin(angle),
+      };
+
+      // -------=======  CREATES NEW ENEMIES WITH SPECIFIED PARAMETERS AND ADDS THEM TO THE "enemies" ARRAY AT A SET INTERVAL OF 2600 MILLISECONDS. -------======= \\
+      powerups.push(new Enemy(x, y, radius, color, velocity, selectedShape));
+    }, 2800);
+  } else if (paused) {
+    console.log("Game Is Paused");
+    return;
+  }
 }
 
 // -------======= SPAWNS ENEMIES AT INTERVALS RANDOMLY SETTING THEIR SIZE AND POSITION ONLY IF THE GAME IS NOT PAUSED. -------======= \\
