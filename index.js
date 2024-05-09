@@ -47,27 +47,23 @@ class Player {
     this.shipImage = shipImage;
   }
 
-  // -------======= A METHOD CALLED DRAW() THAT DRAWS A CIRCULAR SHAPE REPRESENTING THE PLAYER ON A CANVAS CONTEXT. -------======= \\
-  // draw() {
-  //   c.beginPath();
-  //   c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-  //   c.shadowColor = this.color;
-  //   c.shadowBlur = 9;
-  //   c.fillStyle = this.color;
-  //   c.fill();
-  // }
-
   // add center positioning
   draw() {
     // draws the background first and then repeats the it until window is filled
     const background = new Image();
+    // ---------------------- WIDE IS FOR STRETCH / REGULAR IS FOR REPEAT ------------- //
+    // background.src = "./assets/space-bg-wide.png";
+    // background.src = "./assets/Spac-bg.png";
+    // ---------------- PROVIDE A BIGGER BACKGROUND === LESS STRETCH --------------- //
     background.src = "./assets/starry-bg.jpg";
     background.style.width = canvas.width;
     background.style.height = canvas.height;
     background.onload = function () {
+      // -------------- REPEATS THE PATTERN TO FILL BACKGROUND (MAJOR LAG) ----------------//
       // const ptrn = c.createPattern(background, "repeat");
       // c.fillStyle = ptrn;
       // c.fillRect(0, 0, canvas.width, canvas.height);
+      //  --------------- STRETCHES THE IMAGE TO FIT THE BACKGROUND (LOOKS UGLY) ------------- //
       c.drawImage(background, 0, 0, canvas.width, canvas.height);
     };
 
@@ -133,6 +129,8 @@ class Projectile {
       }
     });
 
+    // ------------------- USE FOR A POWER UP ------------------------ //
+
     // // -------======= THIS CODE CHECKS IF THE ELEMENT IS REACHING THE SIDES OF THE CANVAS WIDTH. IF IT IS, IT REVERSES THE HORIZONTAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES. -------======= \\
     // if (this.x - this.radius <= 0 || this.x + this.radius >= canvas.width) {
     //   this.velocity.x = -this.velocity.x; // IF IT IS, IT REVERSES THE HORIZONTAL VELOCITY TO BOUNCE IT BACK WITHIN THE CANVAS BOUNDARIES.
@@ -153,7 +151,21 @@ class Projectile {
   }
 }
 
-// -------======= THIS CODE DEFINES A BLUEPRINT FOR CREATING ENEMY OBJECTS WITH SPECIFIED POSITION, SIZE, COLOR, VELOCITY, AND SHAPE.   -------======= \\
+class PowerUp {
+  constructor(x, y, radius, color, velocity, shape) {
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    this.color = color;
+    this.velocity = velocity;
+    this.shape = shape;
+  }
+
+  draw() {
+
+  }
+}
+// -------======= THIS CgODE DEFINES A BLUEPRINT FOR CREATING ENEMY OBJECTS WITH SPECIFIED POSITION, SIZE, COLOR, VELOCITY, AND SHAPE.   -------======= \\
 class Enemy {
   constructor(x, y, radius, color, velocity, shape) {
     this.x = x;
@@ -468,7 +480,7 @@ function init() {
   particles = [];
   score = 0;
   // -------======= SETTING SCORE TO ZERO, AND UPDATING SCORE DISPLAY ELEMENTS. -------======= \\
-  scoreEl.innerHTML = score;
+  // scoreEl.innerHTML = score;
   bigScoreEl.innerHTML = score;
 }
 
@@ -536,8 +548,6 @@ function animate() {
   if (paused === false) {
     // -------======= CONTINUE ANIMATING BY DRAWING A SEMI-TRANSPARENT COLOR BACKGROUND -------======= \\
     animationId = requestAnimationFrame(animate);
-    c.fillStyle = "rgba(1.5, 1.5, 1.5, 0.5)";
-    c.fillRect(0, 0, canvas.width, canvas.height);
 
     // -------======= DRAWING A PLAYER CHARACTER, AND UPDATING PARTICLES. -------======= \\
     player.draw();
@@ -586,6 +596,7 @@ function animate() {
 
         // -------======= CHECKS IF THE PROJECTILE HAS HIT THE ENEMY BASED ON THE RADIUS OF BOTH OBJECTS. IF THEY ARE CLOSE ENOUGH, A SOUND EFFECT IS PLAYED. -------======= \\
         if (dist - enemy.radius - projectile.radius < 1) {
+          // ------------ HUGE LAG ----------------- //
           // const explosionSound = new Audio("./assets/burst.wav");
           // explosionSound.play();
 
@@ -731,7 +742,7 @@ canvas.addEventListener("mousedown", (event) => {
       event.clientX - canvas.width / 2
     );
 
-    player = new Player(shipImage, x, y, 10, 'white', angle);
+    player = new Player(shipImage, x, y, 10, "white", angle);
 
     // -------======= AND THE MOUSE POSITION (event.clientX, event.clientY) -------======= \\
     const velocity = {
@@ -822,7 +833,7 @@ function startGame() {
     // -------======= SPAWNS ENEMIES -------======= \\
     spawnEnemies();
 
-    // -------======= HIDES A MODAL ELEMENT. IF THE GAME IS PAUSED, -------======= \\
+    // -------======= HIDES A MODAL ELEMENT. IF THE GAME ISN'T PAUSED, -------======= \\
     modalEl.style.display = "none";
   } else {
     // -------======= IT DISPLAYS A MESSAGE AND RETURNS WITHOUT STARTING THE GAME. -------======= \\
