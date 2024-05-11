@@ -34,8 +34,12 @@ usernameEl.textContent = username;
 
 let userShip = sessionStorage.getItem("userShip");
 let shipImage = userShip;
+
 let userScore = sessionStorage.getItem("scoreEl");
 console.log(userScore);
+
+let shipProjectile = sessionStorage.getItem("shipProjectile");
+let projectileImage = shipProjectile;
 
 // -------======= THIS CODE DEFINES THE CLASS PLAYER THAT DESCRIBES A PLAYER OBJECT WITH POSITION (X AND Y COORDINATES), SIZE (RADIUS), COLOR. -------======= \\
 class Player {
@@ -89,13 +93,13 @@ class Player {
 
 // -------======= THIS CLASS DEFINES A PROJECTILE WITH SPECIFIED POSITION, SIZE, COLOR, VELOCITY, AND SHAPE. -------======= \\
 class Projectile {
-  constructor(x, y, radius, color, velocity, shape) {
+  constructor(x, y, radius, color, velocity, projectileImage) {
     this.x = x;
     this.y = y;
     this.radius = radius;
     this.color = color;
     this.velocity = velocity;
-    this.shape = shape;
+    this.projectileImage = projectileImage;
   }
 /*
 1. BEGIN A NEW DRAWING PATH ON THE CANVAS ("c") USING "beginPath()".
@@ -107,10 +111,22 @@ class Projectile {
   draw() {
     c.beginPath();
 
-    if (this.shape === "one") {
-      c.font = `${this.radius * 5}px Arial`;
-      c.fillStyle = this.color;
-      c.fillText("1", this.x - this.radius, this.y + this.radius);
+    const image = new Image();
+    image.src = this.projectileImage;
+    image.onload = () => {
+
+      let projectileWidth = image.width;
+      let projectileHeight = image.height;
+      let projectilePositionX = this.x - this.radius;
+      let projectilePositionY = this.y - this.radius;
+      c.beginPath();
+      c.drawImage(image, projectilePositionX, projectilePositionY);
+    }
+
+    // if (this.shape === "one") {
+    //   c.font = `${this.radius * 5}px Arial`;
+    //   c.fillStyle = this.color;
+    //   c.fillText("1", this.x - this.radius, this.y + this.radius);
 
 /*
 1. CHECK IF THE "shape" PROPERTY OF THE OBJECT IS EQUAL TO "zero".
@@ -118,11 +134,11 @@ class Projectile {
 3. SET THE FILL STYLE OF THE TEXT TO THE COLOR DEFINED IN THE OBJECT'S "color" PROPERTY.
 4. DRAW TEXT CONTAINING A "0" AT A SPECIFIC POSITION ON THE CANVAS. THE POSITION IS CALCULATED BASED ON THE OBJECT'S X AND Y COORDINATES AND RADIUS VALUE.
 */
-    } else if (this.shape === "zero") {
-      c.font = `${this.radius * 5}px Arial`;
-      c.fillStyle = this.color;
-      c.fillText("0", this.x - this.radius, this.y + this.radius);
-    }
+    // } else if (this.shape === "zero") {
+    //   c.font = `${this.radius * 5}px Arial`;
+    //   c.fillStyle = this.color;
+    //   c.fillText("0", this.x - this.radius, this.y + this.radius);
+    // }
   }
 /*
 1. CALL THE "update" METHOD WHICH UPDATES THE POSITION OF AN OBJECT ON THE CANVAS.
